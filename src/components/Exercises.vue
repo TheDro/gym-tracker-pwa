@@ -1,5 +1,5 @@
 <template>
-  <h1 class="bg-red-100" >{{state.message}}</h1>
+  <h1 class="bg-green-100" >{{state.message}}</h1>
 </template>
 
 <script>
