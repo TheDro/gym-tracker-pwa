@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       vue: path.resolve(__dirname, 'node_modules/vue/packages/vue/index')
-    }
+    },
+    extensions: ['.js', '.vue']
   }
 })

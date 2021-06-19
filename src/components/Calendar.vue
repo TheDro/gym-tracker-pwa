@@ -1,0 +1,20 @@
+<template>
+  <h1 class="bg-green-100" >{{state.message}}</h1>
+</template>
+
+<script>
+import {reactive} from 'vue'
+
+export default {
+  setup() {
+    let state = reactive({message: 'Calendar'})
+
+    return {state}
+  }
+}
+
+</script>
+
+<style>
+
+</style>
