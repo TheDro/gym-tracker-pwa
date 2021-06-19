@@ -1,12 +1,12 @@
 <template>
-  <a class="flex-grow"
+  <router-link class="flex-grow"
      :class="{'text-gray-700': !active, 'text-blue-700': active}"
-     :href="props.url">
-    <div class="text-center" style="height: 2rem;">
+     :to="props.url">
+    <div class="text-center" >
       <Icon :name="props.icon"></Icon>
       <div>{{props.text}}</div>
     </div>
-  </a>
+  </router-link>
 </template>
 
 <script>
@@ -40,6 +40,9 @@ export default {
 
 <style>
 a:hover {
+  text-decoration: none;
+}
+a:focus {
   text-decoration: none;
 }
 
