@@ -24,5 +24,6 @@ export default {
   position: fixed;
   width: 100%;
   bottom: 0;
+  background-color: white;;
 }
 </style>

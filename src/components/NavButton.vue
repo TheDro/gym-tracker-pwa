@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {reactive, watchEffect, computed} from 'vue'
+import {computed} from 'vue'
 import {useRoute} from 'vue-router'
 
 export default {
@@ -20,16 +20,10 @@ export default {
     text: String,
   },
   setup(props) {
-    // let state = reactive({
-    //   active: false
-    // })
     let route = useRoute()
-
     let active = computed(() => {
       return !!route.path.match(props.url)
     })
-
-    window.route = route
 
     return {props, active}
   }
