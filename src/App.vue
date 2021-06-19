@@ -1,12 +1,17 @@
 <template>
-  <HelloWorld/>
+  <router-view/>
+  <Button>Exercises</Button>
+  <Button>Workout</Button>
+  <Button>Calendar</Button>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import {useRouter} from 'vue-router'
 
 export default {
-  components: {HelloWorld}
+  setup() {
+
+  }
 }
 
 </script>
