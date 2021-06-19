@@ -1,0 +1,24 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+
+.w-sm {
+  width: 640px;
+}
+
+.w-md {
+  width: 768px;
+}
+
+.w-lg {
+  width: 1024px;
+}
+
+.w-xl {
+  width: 1280px;
+}
+
+.w-2xl {
+  width: 1536px;
+}
