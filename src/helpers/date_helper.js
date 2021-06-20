@@ -8,4 +8,11 @@ function todayDate() {
   return `${year}-${month}-${day}`
 }
 
-export {todayDate}
+function midDay(date) {
+  let hour = ('0'+ (12 + new Date().getTimezoneOffset()/60)).slice(-2)
+  let day = new Date(`${date}T${hour}:00:00`)
+
+  return day
+}
+
+export {todayDate, midDay}

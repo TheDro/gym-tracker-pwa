@@ -50,7 +50,7 @@ let defaultExercises = new IndexArray({
       weight: 35,
     }, {
       uid: nextId(),
-      date: '2021-06-03',
+      date: '2021-06-02',
       nSets: 2,
       nReps: 5,
       weight: 30,
