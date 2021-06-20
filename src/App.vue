@@ -18,5 +18,7 @@ export default {
 </script>
 
 <style>
-
+label {
+  font-weight: 700;
+}
 </style>

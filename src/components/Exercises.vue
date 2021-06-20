@@ -1,19 +1,48 @@
 <template>
-  <h2 class="bg-green-100" >{{state.message}}</h2>
+  <h2 class="bg-green-100 text-center" >{{state.message}}</h2>
   <ul class="p-0">
+
     <li v-for="exercise in store.exercises"
         style="min-height: 2rem;"
         class="border-b-2 border-gray-200">
-      <div class="flex flex-row">
-        <ClickToEdit style="width: 50%" placeholder="New exercise" v-model="exercise.name" :single-line="true" />
+      <div class="flex flex-row items-center">
+        <div class="flex-grow">{{exercise.name}}</div>
         <div class="flex-grow"></div>
-        <LastWorkouts :exercise="exercise"/>
+        <LastWorkouts :last="2" :exercise="exercise"/>
+        <Modal :controller="modalController">
+          <template #target>
+            <Button class="icon large"><Icon name="edit"/></Button>
+          </template>
+          <template #content>
+            <ExerciseEditModal
+                title="Edit exercise"
+                :exercise="exercise"
+                @save="modalController.close"
+                @cancel="modalController"/>
+          </template>
+        </Modal>
+        <Button class="icon large"><Icon name="play"/></Button>
       </div>
     </li>
-    <li class="text-center"
-        @click="onAddExercise()">
-      <Icon name="addCircle"/> Add Exercise
+
+    <li class="flex flex-row justify-center">
+      <Modal :controller="modalController">
+        <template #target>
+          <div class="p-2" @click="onAddExercise()">
+            <Icon name="addCircle"/> Add Exercise
+          </div>
+        </template>
+        <template #content>
+          <ExerciseEditModal
+              title="New exercise"
+              :exercise="state.newExercise"
+              @save="saveNewExercise"
+              @cancel="modalController.close"
+          />
+        </template>
+      </Modal>
     </li>
+
   </ul>
   <pre>{{store.exercises}}</pre>
 </template>
@@ -23,19 +52,30 @@ import {reactive} from 'vue'
 import useGym from "../services/gym_service";
 import ClickToEdit from "./ClickToEdit";
 import LastWorkouts from "./LastWorkouts";
+import Modal from "./Modal";
+import ExerciseEditModal from "./ExerciseEditModal";
 
 export default {
-  components: {ClickToEdit, LastWorkouts},
+  components: {ExerciseEditModal, Modal, ClickToEdit, LastWorkouts},
   setup() {
     let {store, addExercise} = useGym()
-    let state = reactive({message: 'Exercises'})
+    let state = reactive({
+      message: 'Exercises',
+      newExercise: {name: ''}
+    })
+    let modalController = {}
 
     function onAddExercise() {
+      state.newExercise = {name: 'test'}
       console.log('add')
-      addExercise()
     }
 
-    return {state, store, onAddExercise}
+    function saveNewExercise() {
+      addExercise(state.newExercise)
+      modalController.close()
+    }
+
+    return {state, store, onAddExercise, modalController, saveNewExercise}
   }
 }
 

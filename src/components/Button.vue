@@ -19,6 +19,11 @@ button.icon {
   color: #555;
 }
 
+button.icon.large {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
 button.icon:hover {
   background-color: rgba(229, 231, 235); /* gray-200 */
 }

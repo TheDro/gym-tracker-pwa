@@ -6,6 +6,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@popperjs/core": "^2.9.2",
     "feather-icons": "^4.28.0",
     "index-array": "TheDro/index-array#2.2.2",
     "lodash": "^4.17.21",
