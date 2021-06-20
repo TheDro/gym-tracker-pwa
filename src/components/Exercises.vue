@@ -9,7 +9,7 @@
         <div class="flex-grow">{{exercise.name}}</div>
         <div class="flex-grow"></div>
         <LastWorkouts :last="2" :exercise="exercise"/>
-        <Modal :controller="editModalController">
+        <Modal :controller="modalController">
           <template #target>
             <Button class="icon large"><Icon name="edit"/></Button>
           </template>
@@ -17,8 +17,8 @@
             <ExerciseEditModal
                 title="Edit exercise"
                 :exercise="exercise"
-                @save="editModalController.close"
-                @cancel="editModalController.close"/>
+                @save="modalController.close"
+                @cancel="modalController.close"/>
           </template>
         </Modal>
         <Button
@@ -31,7 +31,7 @@
     </li>
 
     <li class="flex flex-row justify-center">
-      <Modal :controller="newModalController">
+      <Modal :controller="modalController">
         <template #target>
           <div class="p-2" @click="onAddExercise()">
             <Icon name="addCircle"/> Add Exercise
@@ -42,7 +42,7 @@
               title="New exercise"
               :exercise="state.newExercise"
               @save="saveNewExercise"
-              @cancel="newModalController.close"
+              @cancel="modalController.close"
           />
         </template>
       </Modal>
@@ -68,9 +68,7 @@ export default {
       message: 'Exercises',
       newExercise: {name: ''}
     })
-    let editModalController = {}
-    let newModalController = {}
-
+    let modalController = {}
 
     function onAddExercise() {
       state.newExercise = {name: 'test'}
@@ -79,7 +77,7 @@ export default {
 
     function saveNewExercise() {
       addExercise(state.newExercise)
-      newModalController.close()
+      modalController.close()
     }
 
     function addToCurrentWorkout(exercise) {
@@ -90,7 +88,7 @@ export default {
       return !!exercise.placeholders.fetch({date: store.currentDate})
     }
 
-    return {state, store, onAddExercise, newModalController, editModalController,
+    return {state, store, onAddExercise, modalController,
       saveNewExercise, addToCurrentWorkout, hasCurrentPlaceholder}
   }
 }

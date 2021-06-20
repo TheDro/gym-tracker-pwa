@@ -10,46 +10,11 @@ let store = reactive({
 })
 
 // For testing
-store.exercises.push({
-  name: 'Bicep curl',
-  workouts: new IndexArray({
-    uid: nextId(),
-    date: '2021-06-06',
-    nSets: 5,
-    nReps: 10,
-    weight: 35,
-  }, {
-    uid: nextId(),
-    date: '2021-06-05',
-    nSets: 5,
-    nReps: 11,
-    weight: 27.5,
-  }, {
-    uid: nextId(),
-    date: '2021-06-04',
-    nSets: 4,
-    nReps: 11,
-    weight: 30,
-  }, {
-    uid: nextId(),
-    date: '2021-06-02',
-    nSets: 6,
-    nReps: 8,
-    weight: 27.5,
-  }, {
-    uid: nextId(),
-    date: '2021-06-01',
-    nSets: 5,
-    nReps: 11,
-    weight: 27.5,
-  })
-})
+import {defaultExercises} from './gym_service.data'
 
-store.exercises.forEach((exercise) => {
-  exercise.placeholders = exercise.workouts.map((workout) => {
-    return {date: workout.date}
-  })
-})
+store.exercises = defaultExercises
+
+
 
 window.store = store
 

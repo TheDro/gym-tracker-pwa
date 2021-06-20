@@ -4,7 +4,7 @@
     <span class="flex-grow" v-for="(workout, index) in lastWorkouts"
       :class="{'bg-gray-200': index%2==0}"
       >
-      <div>{{workout.nSets}}|{{workout.nReps}}</div>
+      <div>{{workout.nSets}} | {{workout.nReps}}</div>
       <div>{{workout.weight}}</div>
     </span>
   </span>
