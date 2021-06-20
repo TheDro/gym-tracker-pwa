@@ -1,5 +1,5 @@
 <template>
-  <h2 class="bg-green-100 text-center" >{{state.message}}</h2>
+  <h2 class="m-0 bg-green-100 text-center" >{{state.message}}</h2>
   <ul class="p-0">
 
     <li v-for="exercise in store.exercises"
@@ -9,7 +9,7 @@
         <div class="flex-grow">{{exercise.name}}</div>
         <div class="flex-grow"></div>
         <LastWorkouts :last="2" :exercise="exercise"/>
-        <Modal :controller="modalController">
+        <Modal :controller="editModalController">
           <template #target>
             <Button class="icon large"><Icon name="edit"/></Button>
           </template>
@@ -17,16 +17,21 @@
             <ExerciseEditModal
                 title="Edit exercise"
                 :exercise="exercise"
-                @save="modalController.close"
-                @cancel="modalController"/>
+                @save="editModalController.close"
+                @cancel="editModalController.close"/>
           </template>
         </Modal>
-        <Button class="icon large"><Icon name="play"/></Button>
+        <Button
+            :class="{'active-workout': hasCurrentPlaceholder(exercise)}"
+            class="icon large"
+            @click="addToCurrentWorkout(exercise)">
+          <Icon :name="hasCurrentPlaceholder(exercise) ? 'x' : 'play'"/>
+        </Button>
       </div>
     </li>
 
     <li class="flex flex-row justify-center">
-      <Modal :controller="modalController">
+      <Modal :controller="newModalController">
         <template #target>
           <div class="p-2" @click="onAddExercise()">
             <Icon name="addCircle"/> Add Exercise
@@ -37,7 +42,7 @@
               title="New exercise"
               :exercise="state.newExercise"
               @save="saveNewExercise"
-              @cancel="modalController.close"
+              @cancel="newModalController.close"
           />
         </template>
       </Modal>
@@ -58,12 +63,14 @@ import ExerciseEditModal from "./ExerciseEditModal";
 export default {
   components: {ExerciseEditModal, Modal, ClickToEdit, LastWorkouts},
   setup() {
-    let {store, addExercise} = useGym()
+    let {store, addExercise, togglePlaceholder} = useGym()
     let state = reactive({
       message: 'Exercises',
       newExercise: {name: ''}
     })
-    let modalController = {}
+    let editModalController = {}
+    let newModalController = {}
+
 
     function onAddExercise() {
       state.newExercise = {name: 'test'}
@@ -72,15 +79,28 @@ export default {
 
     function saveNewExercise() {
       addExercise(state.newExercise)
-      modalController.close()
+      newModalController.close()
     }
 
-    return {state, store, onAddExercise, modalController, saveNewExercise}
+    function addToCurrentWorkout(exercise) {
+      togglePlaceholder(exercise, store.currentDate)
+    }
+
+    function hasCurrentPlaceholder(exercise) {
+      return !!exercise.placeholders.fetch({date: store.currentDate})
+    }
+
+    return {state, store, onAddExercise, newModalController, editModalController,
+      saveNewExercise, addToCurrentWorkout, hasCurrentPlaceholder}
   }
 }
 
 </script>
 
 <style>
+button.icon.active-workout,
+button.icon.active-workout:focus {
+  background-color: greenyellow;
+}
 
 </style>

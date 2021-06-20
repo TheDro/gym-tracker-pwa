@@ -1,12 +1,12 @@
 import {reactive} from 'vue'
-import {currentDate} from "../helpers/date_helper";
+import {todayDate} from "../helpers/date_helper";
 import IndexArray from "index-array";
 import {nextId} from "../helpers/id_helper";
 import {prependSorted} from "../helpers/array_helper";
 
 let store = reactive({
   exercises: new IndexArray(),
-  currentDate: currentDate(),
+  currentDate: todayDate(),
 })
 
 // For testing
@@ -45,6 +45,14 @@ store.exercises.push({
   })
 })
 
+store.exercises.forEach((exercise) => {
+  exercise.placeholders = exercise.workouts.map((workout) => {
+    return {date: workout.date}
+  })
+})
+
+window.store = store
+
 function addExercise(exercise = {}) {
   exercise = {
     uid: nextId(),
@@ -71,12 +79,20 @@ function addWorkout(exercise, workout) {
 
 function addPlaceholder(exercise, date) {
   if (!exercise.placeholders.fetch({date})) {
-    exercise.placeholders.unshift({date})
+    exercise.placeholders.splice(0, 0, {date})
+  }
+}
+
+function togglePlaceholder(exercise, date) {
+  if (!exercise.placeholders.fetch({date})) {
+    exercise.placeholders.splice(0, 0, {date})
+  } else {
+    exercise.placeholders.remove({date})
   }
 }
 
 function useGym() {
-  return {store, addExercise, addWorkout, addPlaceholder}
+  return {store, addExercise, addWorkout, addPlaceholder, togglePlaceholder}
 }
 
 export default useGym

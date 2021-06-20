@@ -45,7 +45,7 @@ export default {
     })
 
     watchEffect(() => {
-      if (typeof props.controller === 'object') {
+      if (typeof props.controller === 'object' && state.active) {
         props.controller.close = close
       }
     })

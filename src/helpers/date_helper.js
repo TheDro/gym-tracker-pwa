@@ -1,6 +1,6 @@
 
 
-function currentDate() {
+function todayDate() {
   let today = new Date()
   let year = today.getFullYear()
   let month = ('0' + (today.getMonth()+1)).slice(-2)
@@ -8,4 +8,4 @@ function currentDate() {
   return `${year}-${month}-${day}`
 }
 
-export {currentDate}
+export {todayDate}
