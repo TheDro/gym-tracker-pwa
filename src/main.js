@@ -10,6 +10,8 @@ import router from "./router";
 import Button from "./components/Button.vue";
 import Icon from "./components/Icon.vue";
 
+import {registerSW} from 'virtual:pwa-register'
+registerSW()
 
 let app = createApp(App)
 app.component('Button', Button)
