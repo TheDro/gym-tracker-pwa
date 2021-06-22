@@ -11,7 +11,7 @@
         <LastWorkouts :last="2" :exercise="exercise"/>
         <Modal :controller="modalController">
           <template #target>
-            <Button class="icon large"><Icon name="edit"/></Button>
+            <Button class="icon large" aria-label="edit"><Icon name="edit"/></Button>
           </template>
           <template #content>
             <ExerciseEditModal
@@ -24,7 +24,8 @@
         <Button
             :class="{'active-workout': hasCurrentPlaceholder(exercise)}"
             class="icon large"
-            @click="addToCurrentWorkout(exercise)">
+            @click="addToCurrentWorkout(exercise)"
+            aria-label="add to workout">
           <Icon :name="hasCurrentPlaceholder(exercise) ? 'x' : 'play'"/>
         </Button>
       </div>
