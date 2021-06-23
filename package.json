@@ -8,7 +8,7 @@
   "dependencies": {
     "@popperjs/core": "^2.9.2",
     "feather-icons": "^4.28.0",
-    "index-array": "TheDro/index-array#2.2.2",
+    "index-array": "TheDro/index-array#2.2.3",
     "lodash": "^4.17.21",
     "marx-css": "^3.0.8",
     "v-calendar": "^3.0.0-alpha.4",

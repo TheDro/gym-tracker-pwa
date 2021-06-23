@@ -1729,9 +1729,9 @@ import-from@^3.0.0:
   dependencies:
     resolve-from "^5.0.0"
 
-index-array@TheDro/index-array#2.2.2:
-  version "2.2.2"
-  resolved "https://codeload.github.com/TheDro/index-array/tar.gz/8e405a52a79449a048318ef17326cfac220df3a2"
+index-array@TheDro/index-array#2.2.3:
+  version "2.2.3"
+  resolved "https://codeload.github.com/TheDro/index-array/tar.gz/170cfef37d261bb4cdeb1868b3c0f2fcf20717a0"
 
 inflight@^1.0.4:
   version "1.0.6"
