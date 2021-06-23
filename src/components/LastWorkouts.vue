@@ -36,7 +36,6 @@ export default {
           if (result.length >= props.last) break
         }
       }
-      console.log({result, exercise: props.exercise, currentDate: store.currentDate})
       return result
     })
 

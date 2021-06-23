@@ -73,7 +73,6 @@ export default {
 
     function onAddExercise() {
       state.newExercise = {name: 'test'}
-      console.log('add')
     }
 
     function saveNewExercise() {

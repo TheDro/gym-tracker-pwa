@@ -1,18 +1,44 @@
-import {reactive} from 'vue'
+import {reactive, watchEffect} from 'vue'
 import {todayDate} from "../helpers/date_helper";
 import IndexArray from "index-array";
 import {nextId} from "../helpers/id_helper";
-import {prependSorted} from "../helpers/array_helper";
+import {prependSorted, decorateArrays} from "../helpers/array_helper";
 
 let store = reactive({
   exercises: new IndexArray(),
   currentDate: todayDate(),
 })
 
-// For testing
-import {defaultExercises} from './gym_service.data'
 
-store.exercises = defaultExercises
+// For testing
+// import {defaultExercises} from './gym_service.data'
+//
+// store.exercises = defaultExercises
+
+// PERSISTENCE
+let justLoaded = false
+load()
+
+watchEffect(() => {
+  save()
+})
+
+function save() {
+  let storage = JSON.stringify(store.exercises, null, 2)
+  if (justLoaded) {
+    justLoaded = false
+    return
+  }
+  console.log('save!')
+  localStorage.setItem('exercises', storage)
+}
+
+function load() {
+  console.log('load!')
+  justLoaded = true
+  let storage = localStorage.getItem('exercises')
+  store.exercises = decorateArrays(JSON.parse(storage))
+}
 
 
 

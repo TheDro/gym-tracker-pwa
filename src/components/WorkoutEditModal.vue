@@ -25,7 +25,6 @@ export default {
   emits: ['cancel', 'save', 'destroy'],
   setup(props, context) {
 
-    console.log('setup edit modal')
     let state = reactive({
       nSets: props.workout.nSets,
       nReps: props.workout.nReps,
@@ -36,14 +35,6 @@ export default {
     watchEffect(() => {
       state.title = props.mode === 'edit' ? 'Edit Workout' : 'New Workout'
     })
-
-    // watchEffect(() => {
-    //   console.log('WorkoutEditModalWatch')
-    //   debugger
-    //   state.nSets = props.workout.nSets
-    //   state.nReps = props.workout.nReps
-    //   state.weight = props.workout.weight
-    // })
 
     function cancel() {
       context.emit('cancel')
