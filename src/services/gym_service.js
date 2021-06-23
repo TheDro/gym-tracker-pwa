@@ -31,15 +31,16 @@ function addExercise(exercise = {}) {
 function addWorkout(exercise, workout) {
   workout = {
     uid: nextId(),
-    date: workout.date,
+    date: workout.date || store.currentDate,
     nSets: workout.nSets || 1,
     nReps: workout.nReps || 1,
     weight: workout.weight || 2.5,
   }
-  if (typeof exercise === 'string') {
-    exercise = store.exercises.fetch({name: exercise})
-  }
   prependSorted(exercise.workouts, workout, 'date')
+}
+
+function removeWorkout(exercise, workout) {
+  exercise.workouts.remove(workout)
 }
 
 function addPlaceholder(exercise, date) {
@@ -57,7 +58,7 @@ function togglePlaceholder(exercise, date) {
 }
 
 function useGym() {
-  return {store, addExercise, addWorkout, addPlaceholder, togglePlaceholder}
+  return {store, addExercise, addWorkout, removeWorkout, addPlaceholder, togglePlaceholder}
 }
 
 export default useGym

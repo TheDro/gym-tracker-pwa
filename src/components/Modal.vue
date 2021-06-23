@@ -19,22 +19,28 @@ export default {
 
   },
   props: {
-    controller: Object
+    controller: Object,
+    openable: {type: Boolean, default: false},
+    unmounts: {type: Boolean, default: false}
   },
   setup: function (props) {
 
     let state = reactive({
       popper: null,
       active: false,
-      mounted: true, // Bugfix: modal content is never unmounted
+      mounted: false, // Bugfix: modal content is never unmounted
     })
 
     function open() {
       state.active = true
+      state.mounted = true
     }
 
     function close() {
       state.active = false
+      if (props.unmounts) {
+        state.mounted = false
+      }
     }
 
     onBeforeUnmount(() => {
@@ -45,8 +51,9 @@ export default {
     })
 
     watchEffect(() => {
-      if (typeof props.controller === 'object' && state.active) {
+      if (typeof props.controller === 'object' && (state.active || props.openable)) {
         props.controller.close = close
+        props.controller.open = open
       }
     })
 

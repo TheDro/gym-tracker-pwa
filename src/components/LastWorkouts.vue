@@ -1,9 +1,11 @@
 <template>
   <span class="flex flex-row">
 
-    <span class="flex-grow" v-for="(workout, index) in lastWorkouts"
-      :class="{'bg-gray-200': index%2==0}"
-      >
+    <span
+        v-for="(workout, index) in lastWorkouts" :key="workout.uid"
+        class="flex-grow workout"
+        :class="{'active': isToday(workout)}"
+        @click="onClick(workout)">
       <div>{{workout.nSets}} | {{workout.nReps}}</div>
       <div>{{workout.weight}}</div>
     </span>
@@ -19,8 +21,9 @@ export default {
     exercise: {type: Object, required: true},
     last: {type: Number, default: 4},
   },
+  emits: ['select'],
   components: {},
-  setup(props) {
+  setup(props, context) {
     let state = reactive({})
     let {store} = useGym()
 
@@ -37,12 +40,26 @@ export default {
       return result
     })
 
-    return {state, store, lastWorkouts}
+    function onClick(workout) {
+      context.emit('select', {workout, exercise: props.exercise})
+    }
+
+    function isToday(workout) {
+      return workout.date === store.currentDate
+    }
+
+    return {state, store, lastWorkouts, onClick, isToday}
   }
 }
 
 </script>
 
 <style>
+.workout:nth-child(2n-1) {
+  background-color: rgb(229, 231, 235);
+}
 
+.workout.active {
+  background-color: greenyellow;
+}
 </style>
