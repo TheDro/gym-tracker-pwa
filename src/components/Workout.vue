@@ -1,14 +1,14 @@
 <template>
-  <h1 class="m-0 bg-green-100 text-center" >{{state.message}}</h1>
+  <h2 class="page-title" >{{state.message}}</h2>
   <ul class="p-0">
 
     <li v-for="exercise in exercises"
         style="min-height: 2rem;"
         class="border-b-2 border-gray-200">
       <div class="flex flex-row items-center">
-        <div class="flex-grow" @click="onSelect({exercise})">{{exercise.name}}</div>
+        <div style="width: 40vw" class=" px-2" @click="onSelect({exercise})">{{exercise.name}}</div>
         <div class="flex-grow" @click="onSelect({exercise})"></div>
-        <LastWorkouts @select="onSelect($event)" style="width: 50%" :last="4" :exercise="exercise"/>
+        <LastWorkouts @select="onSelect($event)" style="width: 60vw" :last="4" :exercise="exercise"/>
       </div>
     </li>
   </ul>

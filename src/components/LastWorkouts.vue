@@ -1,12 +1,15 @@
 <template>
-  <span class="flex flex-row">
+  <span class="inline-block overflow-x-hidden">
 
     <span
         v-for="(workout, index) in lastWorkouts" :key="workout.uid"
-        class="flex-grow workout"
+        style="width: 15vw"
+        class="inline-block workout text-center"
         :class="{'active': isToday(workout)}"
         @click="onClick(workout)">
-      <div>{{workout.nSets}} | {{workout.nReps}}</div>
+      <div class="overflow-x-hidden " style="white-space: nowrap" >
+        <div>{{workout.nSets}}x{{workout.nReps}}</div>
+      </div>
       <div>{{workout.weight}}</div>
     </span>
   </span>

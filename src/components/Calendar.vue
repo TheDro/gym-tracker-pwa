@@ -1,6 +1,8 @@
 <template>
-  <h1 class="m-0 bg-green-100 text-center" >{{state.message}}</h1>
-  <VCal :attributes="calAttributes"  @dayclick="onClick"></VCal>
+  <h2 class="page-title" >{{state.message}}</h2>
+  <VCal
+      is-expanded
+      :attributes="calAttributes"  @dayclick="onClick"></VCal>
 </template>
 
 <script>

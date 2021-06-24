@@ -21,4 +21,11 @@ export default {
 label {
   font-weight: 700;
 }
+.page-title {
+  margin: 0;
+  text-align: center;
+  background-color: #444;
+  color: greenyellow;
+  opacity: 1;
+}
 </style>
