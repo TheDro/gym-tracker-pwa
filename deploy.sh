@@ -20,8 +20,8 @@ git commit -m 'deploy'
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:TheDro/gym-tracker-pwa.git main:gh-pages
+git push -f git@github.com:TheDro/gym-tracker-pwa.git master:gh-pages
 
 cd -
-
+ 
 echo https://thedro.github.io/gym-tracker-pwa

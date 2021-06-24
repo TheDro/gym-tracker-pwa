@@ -37,7 +37,7 @@ function load() {
   console.log('load!')
   justLoaded = true
   let storage = localStorage.getItem('exercises')
-  store.exercises = decorateArrays(JSON.parse(storage))
+  store.exercises = decorateArrays(JSON.parse(storage) || [])
 }
 
 
