@@ -24,4 +24,4 @@ git push -f git@github.com:TheDro/gym-tracker-pwa.git master:gh-pages
 
 cd -
 
-echo https://thedro.github.io/satisfactory-recipes
+echo https://thedro.github.io/gym-tracker-pwa
