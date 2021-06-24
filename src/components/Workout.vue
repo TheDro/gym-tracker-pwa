@@ -6,8 +6,8 @@
         style="min-height: 2rem;"
         class="border-b-2 border-gray-200">
       <div class="flex flex-row items-center">
-        <div class="flex-grow">{{exercise.name}}</div>
-        <div class="flex-grow"></div>
+        <div class="flex-grow" @click="onSelect({exercise})">{{exercise.name}}</div>
+        <div class="flex-grow" @click="onSelect({exercise})"></div>
         <LastWorkouts @select="onSelect($event)" style="width: 50%" :last="4" :exercise="exercise"/>
       </div>
     </li>
@@ -64,7 +64,16 @@ export default {
     })
 
     function onSelect({exercise, workout}) {
-      if (workout.date === store.currentDate) {
+      if (!workout) {
+        state.creating.exercise = exercise
+        state.creating.workout = {
+          uid: nextId(),
+          nSets: 1,
+          nReps: 1,
+          weight: 2.5,
+        }
+        newModalController.open()
+      } else if (workout.date === store.currentDate) {
         state.editing = {exercise, workout}
         editModalController.open()
       } else {
@@ -80,6 +89,7 @@ export default {
     }
 
     function onSaveNew() {
+      console.log('onSaveNew', {exercise: state.creating.exercise, workout: state.creating.workout})
       addWorkout(state.creating.exercise, state.creating.workout)
       newModalController.close()
     }

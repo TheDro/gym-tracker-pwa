@@ -2,15 +2,17 @@ import {nextId} from './id_helper'
 import IndexArray from "index-array";
 
 function prependSorted(list, item, sortedFieldName) {
+  let done = false
   for (let i = 0; i < list.length; i++) {
     let iItem = list[i]
     if (item[sortedFieldName] >= iItem[sortedFieldName]) {
       list.splice(i, 0, item)
+      done = true
       break
     }
-    if (i == list.length-1) {
-      list.push(item)
-    }
+  }
+  if (!done) {
+    list.push(item)
   }
 }
 
