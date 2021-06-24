@@ -4,7 +4,7 @@ import Exercises from "./components/Exercises";
 import Workout from "./components/Workout";
 
 let router = VueRouter.createRouter({
-  history:VueRouter.createWebHistory('/gym-tracker/'),
+  history:VueRouter.createWebHistory('/gym-tracker-pwa/'),
   routes: [
     {path: '/exercises', component: Exercises},
     {path: '/workout', component: Workout},

@@ -5,12 +5,12 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/gym-tracker/',
+  base: '/gym-tracker-pwa/',
   plugins: [
     vue(),
     VitePWA({
       mode: 'development',
-      base: '/gym-tracker/',
+      base: '/gym-tracker-pwa/',
       manifest: {
         "name": "Gym Tracker",
         "short_name": "GymTracker",
