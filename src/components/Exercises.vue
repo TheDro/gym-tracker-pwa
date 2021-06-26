@@ -9,7 +9,7 @@
         <div style="max-width: 45%" class="flex-shrink px-2">{{exercise.name}}</div>
         <div class="flex-grow"></div>
         <LastWorkouts :last="2" :exercise="exercise"/>
-        <Modal :controller="modalController">
+        <Modal :unmounts="true" :controller="modalController">
           <template #target>
             <Button class="icon large" aria-label="edit"><Icon name="edit"/></Button>
           </template>
@@ -17,8 +17,9 @@
             <ExerciseEditModal
                 title="Edit exercise"
                 :exercise="exercise"
-                @save="modalController.close"
-                @cancel="modalController.close"/>
+                @archive="modalController.close()"
+                @save="modalController.close()"
+                @cancel="modalController.close()"/>
           </template>
         </Modal>
         <Button
