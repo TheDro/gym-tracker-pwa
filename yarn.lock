@@ -2632,9 +2632,9 @@ vue-toastification@^2.0.0-rc.1:
   resolved "https://registry.yarnpkg.com/vue-toastification/-/vue-toastification-2.0.0-rc.1.tgz#6a994c19635a493eec0ee290e84a966e07c709d2"
   integrity sha512-hjauv/FyesNZdwcr5m1SCyvu1JmlB+Ts5bTptDLDmsYYlj6Oqv8NYakiElpCF+Abwkn9J/AChh6FwkTL1HOb7Q==
 
-"vue@https://github.com/TheDro/vue-next.git#fix-reactivity-on-array-subclasses-31":
+"vue@https://github.com/TheDro/vue-next.git#build-31":
   version "3.1.1"
-  resolved "https://github.com/TheDro/vue-next.git#01cb6a410fe2ff455ff558a75562cc2c549b6648"
+  resolved "https://github.com/TheDro/vue-next.git#dd124047a8dfa176678e22faddfb511dbd913825"
 
 vuedraggable@^4.0.3:
   version "4.0.3"

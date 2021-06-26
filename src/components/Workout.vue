@@ -65,12 +65,13 @@ export default {
 
     function onSelect({exercise, workout}) {
       if (!workout) {
+        let lastWorkout = exercise.workouts[0] || {nSets: 1, nReps: 1, weight: 2.5}
         state.creating.exercise = exercise
         state.creating.workout = {
           uid: nextId(),
-          nSets: 1,
-          nReps: 1,
-          weight: 2.5,
+          nSets: lastWorkout.nSets,
+          nReps: lastWorkout.nReps,
+          weight: lastWorkout.weight,
         }
         newModalController.open()
       } else if (workout.date === store.currentDate) {

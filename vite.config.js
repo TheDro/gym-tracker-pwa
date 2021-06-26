@@ -18,7 +18,7 @@ export default defineConfig({
         "display": "standalone",
         "background_color": "#fff",
         "description": "Track your gym progress with something better than a notepad.",
-        "theme_color": "#fa0",
+        "theme_color": "#78e6ff",
         "icons": [
           {
             "src": "./GymTrackerLogo512.png",

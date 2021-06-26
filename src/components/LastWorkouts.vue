@@ -62,6 +62,6 @@ export default {
 }
 
 .workout.active {
-  background-color: greenyellow;
+  background-color: #78e6ff;
 }
 </style>

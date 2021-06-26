@@ -1,56 +1,65 @@
 <template>
   <h2 class="page-title" >{{state.message}}</h2>
-  <ul class="p-0">
 
-    <li v-for="exercise in store.exercises"
-        style="min-height: 2rem;"
-        class="border-b-2 border-gray-200">
-      <div class="flex flex-row items-center">
-        <div style="max-width: 45%" class="flex-shrink px-2">{{exercise.name}}</div>
-        <div class="flex-grow"></div>
-        <LastWorkouts :last="2" :exercise="exercise"/>
-        <Modal :unmounts="true" :controller="modalController">
-          <template #target>
-            <Button class="icon large" aria-label="edit"><Icon name="edit"/></Button>
-          </template>
-          <template #content>
-            <ExerciseEditModal
-                title="Edit exercise"
-                :exercise="exercise"
-                @archive="modalController.close()"
-                @save="modalController.close()"
-                @cancel="modalController.close()"/>
-          </template>
-        </Modal>
-        <Button
-            :class="{'active-workout': hasCurrentPlaceholder(exercise)}"
-            class="icon large"
-            @click="addToCurrentWorkout(exercise)"
-            aria-label="add to workout">
-          <Icon :name="hasCurrentPlaceholder(exercise) ? 'x' : 'play'"/>
-        </Button>
+  <IndexDraggable
+    v-model="store.exercises"
+    item-key="uid"
+    handle=".drag-handle"
+    animation="100"
+    >
+    <template #item="{element: exercise}">
+
+      <div style="min-height: 2rem;"
+          class="border-b-2 border-gray-200">
+        <div class="flex flex-row items-center">
+          <div class="drag-handle" style="height: 3rem; width: 5%; line-height: 3rem;"><Icon name="drag"/></div>
+          <div style="max-width: 40%" class="flex-shrink px-0">{{exercise.name}}</div>
+          <div class="flex-grow"></div>
+          <LastWorkouts :last="2" :exercise="exercise"/>
+          <Modal :unmounts="true" :controller="modalController">
+            <template #target>
+              <Button class="icon large" aria-label="edit"><Icon name="edit"/></Button>
+            </template>
+            <template #content>
+              <ExerciseEditModal
+                  title="Edit exercise"
+                  :exercise="exercise"
+                  @archive="modalController.close()"
+                  @save="modalController.close()"
+                  @cancel="modalController.close()"/>
+            </template>
+          </Modal>
+          <Button
+              :class="{'active-workout': hasCurrentPlaceholder(exercise)}"
+              class="icon large"
+              @click="addToCurrentWorkout(exercise)"
+              aria-label="add to workout">
+            <Icon :name="hasCurrentPlaceholder(exercise) ? 'x' : 'play'"/>
+          </Button>
+        </div>
       </div>
-    </li>
 
-    <li class="flex flex-row justify-center">
-      <Modal :controller="modalController">
-        <template #target>
-          <div class="p-4" @click="onAddExercise()">
-            <Icon name="addCircle"/> Add Exercise
-          </div>
-        </template>
-        <template #content>
-          <ExerciseEditModal
-              title="New exercise"
-              :exercise="state.newExercise"
-              @save="saveNewExercise"
-              @cancel="modalController.close"
-          />
-        </template>
-      </Modal>
-    </li>
+    </template>
+  </IndexDraggable>
 
-  </ul>
+  <div class="flex flex-row justify-center">
+    <Modal :controller="modalController">
+      <template #target>
+        <div class="p-4" @click="onAddExercise()">
+          <Icon name="addCircle"/> Add Exercise
+        </div>
+      </template>
+      <template #content>
+        <ExerciseEditModal
+            title="New exercise"
+            :exercise="state.newExercise"
+            @save="saveNewExercise"
+            @cancel="modalController.close"
+        />
+      </template>
+    </Modal>
+  </div>
+
 </template>
 
 <script>
@@ -60,9 +69,10 @@ import ClickToEdit from "./ClickToEdit";
 import LastWorkouts from "./LastWorkouts";
 import Modal from "./Modal";
 import ExerciseEditModal from "./ExerciseEditModal";
+import IndexDraggable from "./IndexDraggable";
 
 export default {
-  components: {ExerciseEditModal, Modal, ClickToEdit, LastWorkouts},
+  components: {IndexDraggable, ExerciseEditModal, Modal, ClickToEdit, LastWorkouts},
   setup() {
     let {store, addExercise, togglePlaceholder} = useGym()
     let state = reactive({
@@ -98,7 +108,7 @@ export default {
 <style>
 button.icon.active-workout,
 button.icon.active-workout:focus {
-  background-color: greenyellow;
+  background-color: #78e6ff;
 }
 
 </style>

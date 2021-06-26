@@ -12,6 +12,7 @@ window.feather = feather
 let iconMap = {
   addCircle: 'plus-circle',
   delete: 'trash-2',
+  drag: 'menu',
   edit: 'edit',
   help: 'help-circle',
   settings: 'settings',
