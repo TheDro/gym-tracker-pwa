@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="icons.svg">
+  <defs
+     id="defs2">
+    <linearGradient
+       id="linearGradient853"
+       inkscape:collect="always">
+      <stop
+         id="stop849"
+         offset="0"
+         style="stop-color:#0eea93;stop-opacity:1" />
+      <stop
+         id="stop851"
+         offset="1"
+         style="stop-color:#3593f4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient879"
+       id="linearGradient1376"
+       x1="15.825378"
+       y1="31.330509"
+       x2="23.810125"
+       y2="38.417561"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient879">
+      <stop
+         style="stop-color:#0eea93;stop-opacity:0.91764706"
+         offset="0"
+         id="stop875" />
+      <stop
+         style="stop-color:#3593f4;stop-opacity:0.94117647"
+         offset="1"
+         id="stop877" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(1.8810236,88.816199)"
+       inkscape:collect="always"
+       xlink:href="#linearGradient879"
+       id="linearGradient5107-5"
+       x1="76.362343"
+       y1="37.131748"
+       x2="85.541847"
+       y2="44.68211"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="linearGradient4532"
+       inkscape:collect="always">
+      <stop
+         id="stop4528"
+         offset="0"
+         style="stop-color:#ffbc0d;stop-opacity:1" />
+      <stop
+         style="stop-color:#ff6a13;stop-opacity:1;"
+         offset="0.55204338"
+         id="stop4536" />
+      <stop
+         id="stop4530"
+         offset="1"
+         style="stop-color:#ff1919;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(-282.99944,-634.06583)"
+       inkscape:collect="always"
+       xlink:href="#linearGradient4532"
+       id="linearGradient4534-4"
+       x1="24.347204"
+       y1="161.53329"
+       x2="246.58614"
+       y2="161.53329"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="44.68211"
+       x2="85.541847"
+       y1="37.131748"
+       x1="76.362343"
+       id="linearGradient5107-5-1"
+       xlink:href="#linearGradient879"
+       inkscape:collect="always"
+       gradientTransform="matrix(3.7795276,0,0,3.7795276,-282.30016,-133.72623)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient853"
+       id="linearGradient957"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(1.8810236,88.816199)"
+       x1="-250.17227"
+       y1="-16.419943"
+       x2="-131.20169"
+       y2="38.6618" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.49497476"
+     inkscape:cx="-874.84675"
+     inkscape:cy="617.62621"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1424"
+     inkscape:window-height="1208"
+     inkscape:window-x="300"
+     inkscape:window-y="147"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#e6e6e6;stroke-width:0.529167;stop-color:#000000"
+       id="rect878"
+       width="575.16406"
+       height="594.40747"
+       x="-934.37433"
+       y="-162.49986" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;opacity:1;vector-effect:none;fill:url(#linearGradient1376);fill-opacity:1;stroke:none;stroke-width:0.900294;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+       x="16.558334"
+       y="38.580513"
+       id="text1377-6"
+       inkscape:export-filename="C:\Users\TheDro\Documents\git\vue\gym-tracker-pwa\public\favicon.ico.png"
+       inkscape:export-xdpi="69.757896"
+       inkscape:export-ydpi="69.757896"
+       transform="matrix(0.88195111,0,0,0.88195111,63.816266,99.456893)"><tspan
+         sodipodi:role="line"
+         id="tspan1375-9"
+         x="16.558334"
+         y="38.580513"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;vector-effect:none;fill:url(#linearGradient1376);fill-opacity:1;stroke:none;stroke-width:0.900294;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1">G</tspan></text>
+    <circle
+       r="5.4289966"
+       style="fill:#000001;fill-opacity:0;stroke:url(#linearGradient5107-5);stroke-width:0.79375;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path5083-6"
+       cx="82.398811"
+       cy="130.0238"
+       inkscape:export-filename="C:\Users\TheDro\Documents\git\vue\gym-tracker-pwa\public\favicon.ico.png"
+       inkscape:export-xdpi="69.757896"
+       inkscape:export-ydpi="69.757896" />
+    <rect
+       ry="63.075607"
+       y="-29.633274"
+       x="-325.61609"
+       height="270.93338"
+       width="270.93329"
+       id="rect4526"
+       style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:9.525;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:export-filename="C:\Users\TheDro\Documents\git\vue\gym-tracker-pwa\public\GymTrackerLogo512.png"
+       inkscape:export-xdpi="48.000011"
+       inkscape:export-ydpi="48.000011" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4524"
+       d="m -233.96104,190.02339 -40.60226,-15.97222 -21.94314,-52.24554 19.55477,-35.974804 28.66042,-13.43457 41.94571,14.18093 5.07528,9.70275 20.89823,-10.89693 -7.91147,-17.91276 20.30112,-34.929893 24.48078,-10.896928 39.70662,11.643296 20.002584,46.871735 -22.540224,34.183524 -22.98804,13.13602 -39.2588,-13.2853 -3.58256,-8.50856 -20.15185,10.89693 7.91147,21.79385 -20.89822,35.52699 z"
+       style="fill:#8e8e8e;stroke:url(#linearGradient957);stroke-width:10.58333333;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-variation-settings:normal;opacity:1;vector-effect:none;fill-opacity:0;stroke-dashoffset:0;stop-color:#000000;stop-opacity:1" />
+    <path
+       style="fill:none;stroke:url(#linearGradient4534-4);stroke-width:9.525;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m -191.3444,-388.34253 -40.60226,-15.97222 -21.94314,-52.24555 19.55477,-35.9748 28.66042,-13.43457 41.94571,14.18093 5.07528,9.70275 20.89823,-10.89693 -7.91147,-17.91276 20.30112,-34.92989 24.48078,-10.89693 39.706622,11.6433 20.00259,46.87173 -22.54023,34.18353 -22.98804,13.13602 -39.258802,-13.2853 -3.58256,-8.50856 -20.15185,10.89693 7.91147,21.79385 -20.89822,35.52699 z"
+       id="path4524-7"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

@@ -25,7 +25,7 @@ label {
   margin: 0;
   text-align: center;
   background-color: #444;
-  color: #2affa9;
+  color: #5effbf;
   opacity: 1;
 }
 </style>
