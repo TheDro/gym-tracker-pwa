@@ -107,17 +107,17 @@ define("./sw.js",['./workbox-600da2ae'], function (workbox) { 'use strict';
    */
 
   workbox.precacheAndRoute([{
-    "url": "assets/index.61eee1db.css",
-    "revision": "c6cc6e59ea7cadaee1c247802a06842f"
+    "url": "assets/index.50fb1353.js",
+    "revision": "e6c2302fcfefe4b35b380283c4bad0c6"
   }, {
-    "url": "assets/index.7c8e4da6.js",
-    "revision": "434d1afcebb4fa2beb63b949a8492b2a"
+    "url": "assets/index.98b84fad.css",
+    "revision": "61758c116ec52ecbb4333dceb3bd2672"
   }, {
-    "url": "assets/vendor.2cb82e0a.js",
-    "revision": "f9a3685d5ef192a1f4e270c0293d6e56"
+    "url": "assets/vendor.fb202f6f.js",
+    "revision": "4dbe215d6b44dddfbc91cc6c78c254cf"
   }, {
     "url": "index.html",
-    "revision": "37b515b42fc80a20b03ceb1ba12c8223"
+    "revision": "14ca02378cd07e5ef5e40cc4a90b501a"
   }, {
     "url": "./GymTrackerLogo512.png",
     "revision": "ebc8e3ba0ba04f213f24711edd00b55e"
