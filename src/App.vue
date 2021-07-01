@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import {useRouter} from 'vue-router'
 import NavBar from "./components/NavBar.vue";
 
 export default {

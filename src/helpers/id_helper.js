@@ -1,7 +1,7 @@
-let currentId = 0
+import shortId from 'short-uuid'
 
 function nextId() {
-  return ++currentId
+  return shortId.generate()
 }
 
 export {nextId}

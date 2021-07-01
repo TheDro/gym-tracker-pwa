@@ -2,18 +2,13 @@ import {reactive, watchEffect} from 'vue'
 import {todayDate} from "../helpers/date_helper";
 import IndexArray from "index-array";
 import {nextId} from "../helpers/id_helper";
-import {prependSorted, decorateArrays} from "../helpers/array_helper";
+import {prependSorted, decorateArrays, replaceUids} from "../helpers/array_helper";
 
 let store = reactive({
   exercises: new IndexArray(),
   currentDate: todayDate(),
 })
 
-
-// For testing
-// import {defaultExercises} from './gym_service.data'
-//
-// store.exercises = defaultExercises
 
 // PERSISTENCE
 let justLoaded = false
@@ -37,14 +32,21 @@ function load() {
   console.log('load!')
   justLoaded = true
   let storage = localStorage.getItem('exercises')
-  store.exercises = decorateArrays(JSON.parse(storage) || [])
+  let exercises = JSON.parse(storage) || []
+  store.exercises = decorateArrays(replaceUids(exercises))
 }
 
 
 
 window.store = store
 
+// PUBLIC METHODS
 function addExercise(exercise = {}) {
+  let existingExercise = store.exercises.fetch({name: exercise.name})
+  if (existingExercise) {
+    existingExercise.archived = false
+    return
+  }
   exercise = {
     uid: nextId(),
     name: exercise.name || '',
@@ -52,6 +54,10 @@ function addExercise(exercise = {}) {
     placeholders: new IndexArray(),
   }
   store.exercises.push(exercise)
+}
+
+function removeExercise(exercise) {
+  store.exercises.remove({uid: exercise.uid})
 }
 
 function addWorkout(exercise, workout) {
@@ -84,7 +90,7 @@ function togglePlaceholder(exercise, date) {
 }
 
 function useGym() {
-  return {store, addExercise, addWorkout, removeWorkout, addPlaceholder, togglePlaceholder}
+  return {store, addExercise, removeExercise, addWorkout, removeWorkout, addPlaceholder, togglePlaceholder}
 }
 
 export default useGym

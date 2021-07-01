@@ -17,6 +17,7 @@ let iconMap = {
   help: 'help-circle',
   settings: 'settings',
   sync: 'refresh-cw',
+  return: 'rotate-ccw',
 }
 
 let defaultSettings = {width: 16, height: 16}

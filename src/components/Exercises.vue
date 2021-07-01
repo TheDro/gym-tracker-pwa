@@ -1,5 +1,15 @@
 <template>
-  <h2 class="page-title" >{{state.message}}</h2>
+  <div>
+    <h2 style="width: 100%" class="page-title">{{state.message}}</h2>
+    <PopperPro>
+      <span style="position: absolute; top: 0rem; right: 0;">
+        <Button style="color: white; background-color: transparent" class="icon large"><Icon name="more-vertical"/></Button>
+      </span>
+      <PopupMenu>
+        <PopupItem @click="goToArchive()">Archive</PopupItem>
+      </PopupMenu>
+    </PopperPro>
+  </div>
 
   <IndexDraggable
     v-model="store.exercises"
@@ -9,7 +19,8 @@
     >
     <template #item="{element: exercise}">
 
-      <div style="min-height: 2rem;"
+      <div v-show="!exercise.archived"
+          style="min-height: 2rem;"
           class="border-b-2 border-gray-200">
         <div class="flex flex-row items-center">
           <div class="drag-handle" style="height: 3rem; width: 5%; line-height: 3rem;"><Icon name="drag"/></div>
@@ -64,16 +75,21 @@
 
 <script>
 import {reactive} from 'vue'
+import {useRouter} from 'vue-router'
 import useGym from "../services/gym_service";
 import ClickToEdit from "./ClickToEdit";
 import LastWorkouts from "./LastWorkouts";
 import Modal from "./Modal";
 import ExerciseEditModal from "./ExerciseEditModal";
 import IndexDraggable from "./IndexDraggable";
+import PopperPro from "./popup/PopperPro";
+import PopupMenu from "./popup/PopupMenu";
+import PopupItem from "./popup/PopupItem";
 
 export default {
-  components: {IndexDraggable, ExerciseEditModal, Modal, ClickToEdit, LastWorkouts},
+  components: {PopupItem, PopupMenu, PopperPro, IndexDraggable, ExerciseEditModal, Modal, ClickToEdit, LastWorkouts},
   setup() {
+    let router = useRouter()
     let {store, addExercise, togglePlaceholder} = useGym()
     let state = reactive({
       message: 'Exercises',
@@ -98,7 +114,11 @@ export default {
       return !!exercise.placeholders.fetch({date: store.currentDate})
     }
 
-    return {state, store, onAddExercise, modalController,
+    function goToArchive() {
+      router.push('archive')
+    }
+
+    return {state, store, goToArchive, onAddExercise, modalController,
       saveNewExercise, addToCurrentWorkout, hasCurrentPlaceholder}
   }
 }

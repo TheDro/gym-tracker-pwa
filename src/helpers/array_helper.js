@@ -1,6 +1,8 @@
 import {nextId} from './id_helper'
 import IndexArray from "index-array";
 
+window.IndexArray = IndexArray
+
 function prependSorted(list, item, sortedFieldName) {
   let done = false
   for (let i = 0; i < list.length; i++) {
@@ -41,6 +43,22 @@ function decorateArrays(obj, nested = true) {
   return result
 }
 
+function replaceUids(obj, nested = true) {
+  if (Array.isArray(obj)) {
+    obj.forEach((item) => {
+      if (_isObject(item)) {
+        item.uid = nextId()
+      }
+    })
+  }
+  if (obj instanceof Object && nested) {
+    for (let key in obj) {
+      replaceUids(obj[key], nested)
+    }
+  }
+
+  return obj
+}
 
 function decorateUids(obj, nested = true) {
   if (Array.isArray(obj)) {
@@ -66,4 +84,4 @@ function _isObject(obj) {
 
 
 
-export {prependSorted, decorateArrays, decorateUids, decorate}
+export {prependSorted, decorateArrays, decorateUids, replaceUids, decorate}

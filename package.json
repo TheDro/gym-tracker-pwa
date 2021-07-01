@@ -11,6 +11,7 @@
     "index-array": "TheDro/index-array#2.2.3",
     "lodash": "^4.17.21",
     "marx-css": "^3.0.8",
+    "short-uuid": "^4.2.0",
     "v-calendar": "^3.0.0-alpha.4",
     "vue": "https://github.com/TheDro/vue-next.git#build-31",
     "vue-router": "^4.0.9",

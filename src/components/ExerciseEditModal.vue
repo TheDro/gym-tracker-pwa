@@ -60,7 +60,7 @@ export default {
 
     function archive() {
       props.exercise.archived = true
-      content.emit('archive')
+      context.emit('archive')
     }
 
     function save() {
