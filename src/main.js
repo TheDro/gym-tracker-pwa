@@ -7,8 +7,8 @@ import 'vue-toastification/dist/index.css'
 
 import App from './App.vue'
 import router from "./router";
-import Button from "./components/Button.vue";
-import Icon from "./components/Icon.vue";
+import Button from "./components/base/Button.vue";
+import Icon from "./components/base/Icon.vue";
 
 import {registerSW} from 'virtual:pwa-register'
 registerSW()

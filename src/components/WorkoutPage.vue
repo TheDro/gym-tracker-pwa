@@ -3,11 +3,11 @@
   <ul class="p-0">
 
     <li v-for="exercise in exercises"
-        style="min-height: 2rem;"
+        style="min-height: 3rem;"
         class="border-b-2 border-gray-200">
       <div class="flex flex-row items-center">
         <div style="width: 40vw" class=" px-2" @click="onSelect({exercise})">{{exercise.name}}</div>
-        <div class="flex-grow" @click="onSelect({exercise})"></div>
+        <div style="height: 3rem" class="flex-grow" @click="onSelect({exercise})"></div>
         <LastWorkouts @select="onSelect($event)" style="width: 60vw" :last="4" :exercise="exercise"/>
       </div>
     </li>
@@ -35,7 +35,7 @@ import IndexArray from "index-array";
 import {reactive, computed} from 'vue'
 import useGym from "../services/gym_service";
 import LastWorkouts from "./LastWorkouts";
-import Modal from "./Modal";
+import Modal from "./base/Modal";
 import {nextId} from "../helpers/id_helper";
 import WorkoutEditModal from "./WorkoutEditModal";
 

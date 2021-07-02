@@ -1,8 +1,8 @@
 import * as VueRouter from "vue-router";
-import Calendar from "./components/Calendar";
-import ExerciseArchive from "./components/ExerciseArchive";
-import Exercises from "./components/Exercises";
-import Workout from "./components/Workout";
+import Calendar from "./components/CalendarPage";
+import ExerciseArchive from "./components/ExerciseArchivePage";
+import Exercises from "./components/ExercisePage";
+import Workout from "./components/WorkoutPage";
 
 let router = VueRouter.createRouter({
   history:VueRouter.createWebHistory('/gym-tracker-pwa/'),
