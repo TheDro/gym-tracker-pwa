@@ -3,10 +3,18 @@ import {todayDate} from "../helpers/date_helper";
 import IndexArray from "index-array";
 import {nextId} from "../helpers/id_helper";
 import {prependSorted, decorateArrays, replaceUids} from "../helpers/array_helper";
+import {addRefocusListener, MINUTE} from "./window_service";
 
 let store = reactive({
   exercises: new IndexArray(),
   currentDate: todayDate(),
+})
+window.store = store
+
+
+// CURRENT DATE
+addRefocusListener(15*MINUTE, () => {
+  store.currentDate = todayDate()
 })
 
 
@@ -38,7 +46,7 @@ function load() {
 
 
 
-window.store = store
+
 
 // PUBLIC METHODS
 function addExercise(exercise = {}) {
