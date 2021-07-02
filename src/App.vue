@@ -8,16 +8,11 @@
 <script>
 import NavBar from "./components/NavBar.vue";
 import {reactive} from 'vue'
-import {addRefocusListener} from "./services/window_service";
 
 export default {
   components: {NavBar},
   setup() {
     let state = reactive({message: ''})
-
-    addRefocusListener(0, () => {
-      state.message = `Refocused at: ${new Date().toISOString()}`
-    })
 
     return {state}
   }
