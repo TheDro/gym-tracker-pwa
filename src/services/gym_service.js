@@ -42,6 +42,11 @@ function load() {
   let storage = localStorage.getItem('exercises')
   let exercises = JSON.parse(storage) || []
   store.exercises = decorateArrays(replaceUids(exercises))
+  store.exercises.forEach((exercise) => {
+    exercise.minWeight = exercise.minWeight || 0
+    exercise.maxWeight = exercise.maxWeight || 500
+    exercise.deltaWeight = exercise.deltaWeight || 2.5
+  })
 }
 
 
@@ -58,6 +63,9 @@ function addExercise(exercise = {}) {
   exercise = {
     uid: nextId(),
     name: exercise.name || '',
+    minWeight: exercise.minWeight || 0,
+    maxWeight: exercise.maxWeight || 500,
+    deltaWeight: exercise.deltaWeight || 2.5,
     workouts: new IndexArray(),
     placeholders: new IndexArray(),
   }

@@ -4,6 +4,7 @@ import 'marx-css/css/marx.css'
 import { createApp } from 'vue'
 import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
+import 'vue-scroll-picker/lib/style.css'
 
 import App from './App.vue'
 import router from "./router";

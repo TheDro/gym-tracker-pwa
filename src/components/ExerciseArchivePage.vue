@@ -1,7 +1,7 @@
 <template>
   <h2 class="page-title" >{{state.message}}</h2>
 
-  <div v-for="exercise in archivedExercises"
+  <div v-for="exercise in archivedExercises" :key="exercise.uid"
       style="min-height: 2rem;"
       class="border-b-2 border-gray-200">
     <div class="flex flex-row items-center">

@@ -2,7 +2,7 @@
   <h2 class="page-title" >{{state.message}}</h2>
   <ul class="p-0">
 
-    <li v-for="exercise in exercises"
+    <li v-for="exercise in exercises" :key="exercise.uid"
         style="min-height: 3rem;"
         class="border-b-2 border-gray-200">
       <div class="flex flex-row items-center">
@@ -16,13 +16,16 @@
     <Modal :openable="true" :unmounts="true" :controller="newModalController">
       <template #content>
         <WorkoutEditModal
-            mode="new" :workout="state.creating.workout"
+            mode="new"
+            :workout="state.creating.workout" :exercise="state.creating.exercise"
             @save="onSaveNew()" @cancel="newModalController.close()"/>
       </template>
     </Modal>
     <Modal :openable="true" :unmounts="true" :controller="editModalController">
       <template #content>
-        <WorkoutEditModal mode="edit" :workout="state.editing.workout"
+        <WorkoutEditModal
+            mode="edit"
+            :workout="state.editing.workout" :exercise="state.editing.exercise"
             @save="editModalController.close()" @cancel="editModalController.close()"
             @destroy="onDestroyEdit()"/>
       </template>
@@ -90,7 +93,6 @@ export default {
     }
 
     function onSaveNew() {
-      console.log('onSaveNew', {exercise: state.creating.exercise, workout: state.creating.workout})
       addWorkout(state.creating.exercise, state.creating.workout)
       newModalController.close()
     }
