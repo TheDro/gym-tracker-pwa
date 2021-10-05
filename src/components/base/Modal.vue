@@ -23,7 +23,7 @@ export default {
     openable: {type: Boolean, default: false},
     unmounts: {type: Boolean, default: false}
   },
-  setup: function (props) {
+  setup: function (props, context) {
 
     let state = reactive({
       popper: null,
@@ -32,6 +32,7 @@ export default {
     })
 
     function open() {
+      console.log('modal open context', context.attrs)
       state.active = true
       state.mounted = true
     }

@@ -1,7 +1,17 @@
 <template>
-  <h2 class="page-title" >{{state.message}}</h2>
-  <ul class="p-0">
+  <div>
+    <h2 style="width: 100%" class="page-title" >{{state.message}}</h2>
+    <PopperPro :controller="menuController">
+      <span style="position: absolute; top: 0rem; right: 0;">
+        <Button style="color: white; background-color: transparent" class="icon large"><Icon name="more-vertical"/></Button>
+      </span>
+      <PopupMenu>
+        <PopupItem @click="showTimer()">Timer</PopupItem>
+      </PopupMenu>
+    </PopperPro>
+  </div>
 
+  <ul class="p-0">
     <li v-for="exercise in exercises" :key="exercise.uid"
         style="min-height: 3rem;"
         class="border-b-2 border-gray-200">
@@ -12,7 +22,13 @@
       </div>
     </li>
   </ul>
+
   <div>
+    <Modal :openable="true" :controller="timerModalController">
+      <template #content>
+        <TimerModal />
+      </template>
+    </Modal>
     <Modal :openable="true" :unmounts="true" :controller="newModalController">
       <template #content>
         <WorkoutEditModal
@@ -41,12 +57,20 @@ import LastWorkouts from "./LastWorkouts";
 import Modal from "./base/Modal";
 import {nextId} from "../helpers/id_helper";
 import WorkoutEditModal from "./WorkoutEditModal";
+import PopperPro from "./popup/PopperPro";
+import TimerModal from "./timer/TimerModal";
+import PopupItem from "./popup/PopupItem";
+import PopupMenu from "./popup/PopupMenu";
 
 export default {
   components: {
+    PopupItem,
+    PopupMenu,
+    PopperPro,
     Modal,
     LastWorkouts,
     WorkoutEditModal,
+    TimerModal,
   },
   setup() {
     let {store, addWorkout, removeWorkout} = useGym()
@@ -57,6 +81,8 @@ export default {
     })
     let newModalController = {}
     let editModalController = {}
+    let menuController = {}
+    let timerModalController = {}
 
     let exercises = computed(() => {
       let result = store.exercises.toArray().filter((exercise) => {
@@ -102,9 +128,18 @@ export default {
       editModalController.close()
     }
 
+    function showTimer() {
+      menuController.close()
+      timerModalController.open()
+    }
 
-    return {state, store, exercises, onSelect, onSaveNew, onDestroyEdit,
-      newModalController, editModalController}
+
+    function test() {
+      console.log('test')
+    }
+
+    return {state, store, exercises, onSelect, onSaveNew, onDestroyEdit, showTimer,
+      newModalController, editModalController, menuController, timerModalController}
   }
 }
 
