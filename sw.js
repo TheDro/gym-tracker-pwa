@@ -107,23 +107,23 @@ define("./sw.js",['./workbox-600da2ae'], function (workbox) { 'use strict';
    */
 
   workbox.precacheAndRoute([{
-    "url": "assets/index.3c2b5a5a.js",
-    "revision": "28c2177c27d5326f10e5023c20da9c8a"
+    "url": "assets/index.76bc269b.css",
+    "revision": "366e2737cccee7bbccf9a035ec64a473"
   }, {
-    "url": "assets/index.efd48b63.css",
-    "revision": "f35073a5a4edbdca717f8e21b079b631"
+    "url": "assets/index.a57c865e.js",
+    "revision": "33f78e71e65a4dc38505dc5a9bf924e4"
   }, {
-    "url": "assets/vendor.83ef0962.js",
-    "revision": "10e94fac0756a8c136f1277b666fa380"
+    "url": "assets/vendor.29189bc3.js",
+    "revision": "f67b3d4b612f1626892b84a8507cb215"
   }, {
     "url": "index.html",
-    "revision": "bd4acc4801bdf44ff0938cce383e785a"
+    "revision": "764698dd9046ab92d5058d2006b40d70"
   }, {
-    "url": "./GymTrackerLogo512.png",
+    "url": "./GymTrackerLogoV2_512.png",
     "revision": "ebc8e3ba0ba04f213f24711edd00b55e"
   }, {
     "url": "manifest.webmanifest",
-    "revision": "4185e0cfb73abb80e4f77332cb8dbdf1"
+    "revision": "f85955b5cb4f8c8bd3e2c18eaa3a8933"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html")));
