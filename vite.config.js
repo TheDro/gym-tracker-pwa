@@ -21,7 +21,7 @@ export default defineConfig({
         "theme_color": "#78e6ff",
         "icons": [
           {
-            "src": "./GymTrackerLogo512.png",
+            "src": "./GymTrackerLogoV2_512.png",
             "sizes": "512x512",
             "type": "image/png"
           }
