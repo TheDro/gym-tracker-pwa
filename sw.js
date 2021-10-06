@@ -110,14 +110,14 @@ define("./sw.js",['./workbox-600da2ae'], function (workbox) { 'use strict';
     "url": "assets/index.76bc269b.css",
     "revision": "366e2737cccee7bbccf9a035ec64a473"
   }, {
-    "url": "assets/index.a57c865e.js",
+    "url": "assets/index.bf0e8cc6.js",
     "revision": "33f78e71e65a4dc38505dc5a9bf924e4"
   }, {
     "url": "assets/vendor.29189bc3.js",
     "revision": "f67b3d4b612f1626892b84a8507cb215"
   }, {
     "url": "index.html",
-    "revision": "764698dd9046ab92d5058d2006b40d70"
+    "revision": "2be8aaab8501248ea804b0697f87d6c4"
   }, {
     "url": "./GymTrackerLogoV2_512.png",
     "revision": "ebc8e3ba0ba04f213f24711edd00b55e"
