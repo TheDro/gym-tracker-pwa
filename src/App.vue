@@ -1,6 +1,7 @@
 <template>
   <div v-if="state.message">{{state.message}}</div>
   <router-view/>
+  <div class="spacer"></div>
   <NavBar></NavBar>
 
 </template>
@@ -30,5 +31,8 @@ label {
   background-color: #444;
   color: #5effbf;
   opacity: 1;
+}
+.spacer {
+  height: 4rem;
 }
 </style>
