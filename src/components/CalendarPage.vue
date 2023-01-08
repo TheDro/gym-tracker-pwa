@@ -1,6 +1,7 @@
 <template>
   <h2 class="page-title" >{{state.message}}</h2>
   <VCal
+      :first-day-of-week="1"
       is-expanded
       :attributes="calAttributes"  @dayclick="onClick"></VCal>
 </template>
@@ -33,9 +34,6 @@ export default {
       })
 
       let attributes = workoutDates.toArray().map((dateObj) => {
-        let hour = ('0'+ (12 + new Date().getTimezoneOffset()/60)).slice(-2)
-        let day = new Date(`${dateObj.date}T${hour}:00:00`)
-
         return {
           dates: midDay(dateObj.date),
           dot: true,

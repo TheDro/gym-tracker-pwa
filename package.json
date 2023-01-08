@@ -12,7 +12,7 @@
     "lodash": "^4.17.21",
     "marx-css": "^3.0.8",
     "short-uuid": "^4.2.0",
-    "v-calendar": "^3.0.0-alpha.4",
+    "v-calendar": "^3.0.0-alpha.8",
     "vue": "^3.2.19",
     "vue-router": "^4.0.9",
     "vue-scroll-picker": "^1.1.0",
