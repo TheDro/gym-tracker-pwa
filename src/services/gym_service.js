@@ -23,6 +23,7 @@ let justLoaded = false
 load()
 
 watchEffect(() => {
+  console.log('watchEffect save')
   save()
 })
 

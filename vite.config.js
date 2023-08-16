@@ -17,7 +17,7 @@ export default defineConfig({
         "start_url": ".",
         "display": "standalone",
         "background_color": "#fff",
-        "description": "Track your gym progress with something better than a notepad.",
+        "description": "Track your gym progress with something better than a notepad!",
         "theme_color": "#78e6ff",
         "icons": [
           {

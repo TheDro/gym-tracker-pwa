@@ -2,7 +2,7 @@
   <h2 class="page-title" >{{state.message}}</h2>
   <VCal
       :first-day-of-week="1"
-      is-expanded
+      expanded
       :attributes="calAttributes"  @dayclick="onClick"></VCal>
 </template>
 
@@ -47,7 +47,8 @@ export default {
         }
       })
 
-      attributes.push({
+      // calendar starts looking at first attribute (unshift)
+      attributes.unshift({
         dates: midDay(store.currentDate),
         highlight: {
           fillMode: 'solid'
@@ -71,5 +72,9 @@ export default {
 <style>
 .vc-day-content:focus {
   background-color: transparent;
+}
+
+.vc-pane-container button {
+  background: transparent;
 }
 </style>

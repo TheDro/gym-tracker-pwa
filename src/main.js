@@ -6,7 +6,7 @@ import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
 import 'vue-scroll-picker/lib/style.css'
 import 'v-calendar/dist/style.css'
-import { SetupCalendar } from 'v-calendar'
+import { setupCalendar } from 'v-calendar'
 
 import App from './App.vue'
 import router from "./router";
@@ -21,5 +21,5 @@ app.component('Button', Button)
 app.component('Icon', Icon)
 app.use(router)
 app.use(Toast)
-app.use(SetupCalendar, {})
+app.use(setupCalendar, {})
 app.mount('#app')

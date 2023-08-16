@@ -29,7 +29,7 @@ label {
   margin: 0;
   text-align: center;
   background-color: #444;
-  color: #5effbf;
+  color: #5ed7ff;
   opacity: 1;
 }
 .spacer {
