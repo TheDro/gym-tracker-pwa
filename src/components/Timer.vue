@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import {reactive, computed} from 'vue'
+import {reactive, computed, watchEffect} from 'vue'
 import useGym from "../services/gym_service";
 import { every } from '../helpers/date_helper';
 
@@ -128,19 +128,9 @@ export default {
         return 'paused'
       }
     })
-    let remainingTimeDisplay = computed(() => {
-      if (timerState.startedAt) {
-        return Math.max(0, timerState.remainingTime - (new Date() - timerState.startedAt)/1000)
-      } else {
-        return Math.max(0, timerState.remainingTime)
-      }
-    })
     let handle = null
-    let tic = new Date()
 
     function updateLoop() {
-      console.log(new Date() - tic)
-      tic = new Date()
       let actualRemainingTime = timerState.remainingTime - 
         (new Date() - timerState.startedAt)/1000
       if (actualRemainingTime < 0) {
@@ -149,7 +139,7 @@ export default {
           timerState.remainingTime*1000)
         if (timerState.currentPeriod >= timerState.nSets*2) {
           timerState.remainingTime = 0
-          timerState.remainingTimeDisplay = 0
+          updateDisplay()
           // TODO: This doesn't seem right
           playPause()
           return true
@@ -160,8 +150,7 @@ export default {
         }
 
       }
-      timerState.remainingTimeDisplay = 
-        timerState.remainingTime - (new Date() - timerState.startedAt)/1000
+      updateDisplay()
     }
 
     function playPause() {
@@ -171,7 +160,7 @@ export default {
           timerState.currentPeriod = 1
           timerState.remainingTime = timerState.activePeriod
         }
-        handle = every(100, updateLoop)
+        handle = every(200, updateLoop)
       } else {
         timerState.remainingTime -= (new Date() - timerState.startedAt)/1000
         timerState.startedAt = null
@@ -182,7 +171,7 @@ export default {
     function reset() {
       timerState.currentPeriod = 1
       timerState.remainingTime = timerState.activePeriod
-      timerState.remainingTimeDisplay = timerState.activePeriod
+      updateDisplay()
       if (timerState.startedAt) {timerState.startedAt = new Date()}
     }
 
@@ -192,24 +181,32 @@ export default {
       return `${minutes}:${('00'+seconds).slice(-2)}`
     }
 
-    function increment(amount) {
-      console.log( Math.round((new Date() - timerState.startedAt)/1000))
-      timerState.remainingTime = Math.max(
-        Math.round((new Date() - timerState.startedAt)/1000),
-        timerState.remainingTime + amount
-      )
+    function updateDisplay() {
+      if (timerState.startedAt) {
+        timerState.remainingTimeDisplay = Math.max(0, timerState.remainingTime - (new Date() - timerState.startedAt)/1000)
+      } else {
+        timerState.remainingTimeDisplay = Math.max(0, timerState.remainingTime)
+      }
     }
 
-    function incrementAll(amount, periodType = null) {
-      let currentPeriodType = timerState.currentPeriod % 2 == 1 ? 'active' : 'rest'
-      periodType = periodType || currentPeriodType
+    function increment(amount) {
       if (timerState.startedAt) {
         timerState.remainingTime = Math.max(
           Math.round((new Date() - timerState.startedAt)/1000),
           timerState.remainingTime + amount
         )
-      } else if (currentPeriodType === periodType) {
+      } else {
         timerState.remainingTime = Math.max(0, timerState.remainingTime + amount)
+      }
+      updateDisplay()
+    }
+
+    function incrementAll(amount, periodType = null) {
+      let currentPeriodType = timerState.currentPeriod % 2 == 1 ? 'active' : 'rest'
+      periodType = periodType || currentPeriodType
+
+      if (currentPeriodType === periodType) {
+        increment(amount)
       }
       if (periodType === 'active') {
         timerState.activePeriod = Math.max(0, timerState.activePeriod + amount)
@@ -218,7 +215,7 @@ export default {
       }
     }
 
-    return {state, store, timerState, running, playPause, reset, status, formatTime, increment, incrementAll, remainingTimeDisplay}
+    return {state, store, timerState, running, playPause, reset, status, formatTime, increment, incrementAll}
   }
 }
 
