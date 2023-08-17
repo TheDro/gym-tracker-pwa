@@ -1,8 +1,18 @@
 <template>
   <div class="text-center">
 
-    <div>
+    <div class="py-1">
+      <Button 
+        class="icon large"
+        @click="addSet(-1)">
+        <Icon name="minus" />
+      </Button>
       {{ timerState.nSets - Math.floor(timerState.currentPeriod/2) }} sets left
+      <Button 
+        class="icon large"
+        @click="addSet(1)">
+        <Icon name="plus" />
+      </Button>
     </div>
 
     <div class="text-2xl">
@@ -12,7 +22,7 @@
           @click="incrementAll(-15, 'active')">
           --15
         </Button>
-        <Icon name="sun" />
+        <Icon name="sun" class="pl-2"/>
         {{ formatTime(timerState.activePeriod) }}
         <Button
           class="icon large"
@@ -26,7 +36,7 @@
           @click="incrementAll(-15, 'rest')">
           --15
         </Button>
-        <Icon name="moon" />
+        <Icon name="moon" class="pl-2"/>
         {{ formatTime(timerState.restPeriod) }}
         <Button
           class="icon large"
@@ -97,8 +107,8 @@ import { every } from '../helpers/date_helper';
 
 let timerState = reactive({
   nSets: 3,
-  activePeriod: 8,
-  restPeriod: 5,
+  activePeriod: 60,
+  restPeriod: 60,
   currentPeriod: 1,
   startedAt: null,
   remainingTime: null,
@@ -215,7 +225,7 @@ export default {
       }
     }
 
-    return {state, store, timerState, running, playPause, reset, status, formatTime, increment, incrementAll}
+    return {state, timerState, running, playPause, reset, status, formatTime, increment, incrementAll}
   }
 }
 
