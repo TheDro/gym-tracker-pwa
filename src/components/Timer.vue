@@ -1,0 +1,228 @@
+<template>
+  <div class="text-center">
+
+    <div>
+      {{ timerState.nSets - Math.floor(timerState.currentPeriod/2) }} sets left
+    </div>
+
+    <div class="text-2xl">
+      <div style="display: inline-block; width: 50%">
+        <Button
+          class="icon large"
+          @click="incrementAll(-15, 'active')">
+          --15
+        </Button>
+        <Icon name="sun" />
+        {{ formatTime(timerState.activePeriod) }}
+        <Button
+          class="icon large"
+          @click="incrementAll(15, 'active')">
+          15++
+        </Button>
+      </div>
+      <div style="display: inline-block; width: 50%">
+        <Button
+          class="icon large"
+          @click="incrementAll(-15, 'rest')">
+          --15
+        </Button>
+        <Icon name="moon" />
+        {{ formatTime(timerState.restPeriod) }}
+        <Button
+          class="icon large"
+          @click="incrementAll(15, 'rest')">
+          15++
+        </Button>
+      </div>
+     
+    </div>
+
+    <div class="text-2xl">
+      <Icon :name="timerState.currentPeriod % 2 === 1 ? 'sun' : 'moon'" />
+      {{ formatTime(timerState.remainingTimeDisplay) }}
+    </div>
+    <!-- <div>
+      {{ timerState.remainingTime }}
+      {{  Math.round((new Date() - timerState.startedAt)/1000) }}
+    </div> -->
+    
+    <Button
+      class="icon large"
+      @click="incrementAll(-15)">
+      --15
+    </Button>
+
+    <Button
+      class="icon large"
+      @click="increment(-15)">
+      -15
+    </Button>
+    
+    <Button
+      class="icon large"
+      aria-label="reset" 
+      @click="reset()">
+      <Icon name="reset" />
+    </Button>
+
+    <Button
+      class="icon large"
+      aria-label="play/pause"
+      @click="playPause()">
+      <Icon :name="{
+        running: 'pause',
+        complete: 'play',
+        paused: 'play'
+      }[status]"/>
+    </Button>
+
+    <Button
+      class="icon large"
+      @click="increment(15)">
+      15+
+    </Button>
+
+    <Button
+      class="icon large"
+      @click="incrementAll(15)">
+      15++
+    </Button>
+  </div>
+</template>
+
+<script>
+import {reactive, computed} from 'vue'
+import useGym from "../services/gym_service";
+import { every } from '../helpers/date_helper';
+
+let timerState = reactive({
+  nSets: 3,
+  activePeriod: 8,
+  restPeriod: 5,
+  currentPeriod: 1,
+  startedAt: null,
+  remainingTime: null,
+  remainingTimeDisplay: null,
+})
+timerState.remainingTime = timerState.activePeriod
+timerState.remainingTimeDisplay = timerState.remainingTime
+
+export default {
+  props: {
+    exercise: {type: Object, required: false},
+  },
+  components: {},
+  setup(props, context) {
+    let state = reactive({
+      
+    })
+    let running = computed(() => {
+      return timerState.startedAt !== null
+    })
+    let status = computed(() => {
+      if (timerState.startedAt !== null) {
+        return 'running'
+      } else if (timerState.currentPeriod === timerState.nSets*2) {
+        return 'complete'
+      } else {
+        return 'paused'
+      }
+    })
+    let remainingTimeDisplay = computed(() => {
+      if (timerState.startedAt) {
+        return Math.max(0, timerState.remainingTime - (new Date() - timerState.startedAt)/1000)
+      } else {
+        return Math.max(0, timerState.remainingTime)
+      }
+    })
+    let handle = null
+    let tic = new Date()
+
+    function updateLoop() {
+      console.log(new Date() - tic)
+      tic = new Date()
+      let actualRemainingTime = timerState.remainingTime - 
+        (new Date() - timerState.startedAt)/1000
+      if (actualRemainingTime < 0) {
+        timerState.currentPeriod += 1
+        timerState.startedAt = new Date(timerState.startedAt.valueOf() + 
+          timerState.remainingTime*1000)
+        if (timerState.currentPeriod >= timerState.nSets*2) {
+          timerState.remainingTime = 0
+          timerState.remainingTimeDisplay = 0
+          // TODO: This doesn't seem right
+          playPause()
+          return true
+        } else if (timerState.currentPeriod % 2 == 1) {
+          timerState.remainingTime = timerState.activePeriod
+        } else if (timerState.currentPeriod % 2 == 0) {
+          timerState.remainingTime = timerState.restPeriod
+        }
+
+      }
+      timerState.remainingTimeDisplay = 
+        timerState.remainingTime - (new Date() - timerState.startedAt)/1000
+    }
+
+    function playPause() {
+      if (!timerState.startedAt) {
+        timerState.startedAt = new Date()
+        if (timerState.currentPeriod >= timerState.nSets*2) {
+          timerState.currentPeriod = 1
+          timerState.remainingTime = timerState.activePeriod
+        }
+        handle = every(100, updateLoop)
+      } else {
+        timerState.remainingTime -= (new Date() - timerState.startedAt)/1000
+        timerState.startedAt = null
+        handle?.stop()
+      }
+    }
+
+    function reset() {
+      timerState.currentPeriod = 1
+      timerState.remainingTime = timerState.activePeriod
+      timerState.remainingTimeDisplay = timerState.activePeriod
+      if (timerState.startedAt) {timerState.startedAt = new Date()}
+    }
+
+    function formatTime(totalSeconds) {
+      let minutes = Math.floor(totalSeconds/60)
+      let seconds = Math.ceil(totalSeconds % 60)
+      return `${minutes}:${('00'+seconds).slice(-2)}`
+    }
+
+    function increment(amount) {
+      console.log( Math.round((new Date() - timerState.startedAt)/1000))
+      timerState.remainingTime = Math.max(
+        Math.round((new Date() - timerState.startedAt)/1000),
+        timerState.remainingTime + amount
+      )
+    }
+
+    function incrementAll(amount, periodType = null) {
+      let currentPeriodType = timerState.currentPeriod % 2 == 1 ? 'active' : 'rest'
+      periodType = periodType || currentPeriodType
+      if (timerState.startedAt) {
+        timerState.remainingTime = Math.max(
+          Math.round((new Date() - timerState.startedAt)/1000),
+          timerState.remainingTime + amount
+        )
+      } else if (currentPeriodType === periodType) {
+        timerState.remainingTime = Math.max(0, timerState.remainingTime + amount)
+      }
+      if (periodType === 'active') {
+        timerState.activePeriod = Math.max(0, timerState.activePeriod + amount)
+      } else if (periodType === 'rest') {
+        timerState.restPeriod = Math.max(0, timerState.restPeriod + amount)
+      }
+    }
+
+    return {state, store, timerState, running, playPause, reset, status, formatTime, increment, incrementAll, remainingTimeDisplay}
+  }
+}
+
+</script>
+
+<style>
+</style>
