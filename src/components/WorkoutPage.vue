@@ -1,5 +1,6 @@
 <template>
   <h2 class="page-title" >{{state.message}}</h2>
+  <Timer></Timer>
   <ul class="p-0">
 
     <li v-for="exercise in exercises" :key="exercise.uid"
@@ -41,12 +42,14 @@ import LastWorkouts from "./LastWorkouts";
 import Modal from "./base/Modal";
 import {nextId} from "../helpers/id_helper";
 import WorkoutEditModal from "./WorkoutEditModal";
+import Timer from "./Timer"
 
 export default {
   components: {
     Modal,
     LastWorkouts,
     WorkoutEditModal,
+    Timer,
   },
   setup() {
     let {store, addWorkout, removeWorkout} = useGym()

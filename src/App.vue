@@ -1,6 +1,5 @@
 <template>
   <div v-if="state.message">{{state.message}}</div>
-  <Timer></Timer>
   <!-- <VCal style="display: none"/> -->
   <router-view/>
   <div class="spacer"></div>

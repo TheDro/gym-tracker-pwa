@@ -1,7 +1,7 @@
 <template>
-  <div class="text-center">
+  <div class="text-center py-1">
 
-    <div class="py-1">
+    <div class="">
       <Button 
         class="icon large"
         @click="addSet(-1)">
@@ -132,7 +132,7 @@ export default {
     let status = computed(() => {
       if (timerState.startedAt !== null) {
         return 'running'
-      } else if (timerState.currentPeriod === timerState.nSets*2) {
+      } else if (timerState.currentPeriod >= timerState.nSets*2) {
         return 'complete'
       } else {
         return 'paused'
@@ -170,7 +170,7 @@ export default {
           timerState.currentPeriod = 1
           timerState.remainingTime = timerState.activePeriod
         }
-        handle = every(200, updateLoop)
+        handle = every(100, updateLoop)
       } else {
         timerState.remainingTime -= (new Date() - timerState.startedAt)/1000
         timerState.startedAt = null
@@ -186,8 +186,9 @@ export default {
     }
 
     function formatTime(totalSeconds) {
+      totalSeconds = Math.ceil(totalSeconds)
       let minutes = Math.floor(totalSeconds/60)
-      let seconds = Math.ceil(totalSeconds % 60)
+      let seconds = totalSeconds % 60
       return `${minutes}:${('00'+seconds).slice(-2)}`
     }
 
@@ -225,7 +226,18 @@ export default {
       }
     }
 
-    return {state, timerState, running, playPause, reset, status, formatTime, increment, incrementAll}
+    function addSet(amount) {
+      timerState.nSets = Math.max(1, timerState.nSets + amount)
+      if (timerState.currentPeriod >= timerState.nSets*2) {
+          timerState.remainingTime = 0
+          updateDisplay()
+          // TODO: This doesn't seem right
+          playPause()
+          return true
+      }
+    }
+
+    return {state, timerState, running, playPause, reset, status, formatTime, increment, incrementAll, addSet}
   }
 }
 
