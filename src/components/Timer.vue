@@ -1,6 +1,5 @@
 <template>
-  <div class="text-center py-1">
-
+  <div class="text-center py-1 background" :style="{'background-color': state.backgroundColor}">
     <div class="">
       <Button 
         class="icon large"
@@ -15,7 +14,7 @@
       </Button>
     </div>
 
-    <div class="py-1 text-2xl _active_rest_periods" v-if="status === 'pristine'">
+    <div class="py-1 text-2xl _active_rest_periods" v-if="state.status === 'pristine'">
       <div style="display: inline-block; width: 50%">
         <Button
           class="icon large"
@@ -51,8 +50,8 @@
      
     </div>
 
-    <div class="text-2xl py-1" v-if="status !== 'pristine'">
-      <Button v-if="status !== 'pristine'"
+    <div class="text-2xl py-1" v-if="state.status !== 'pristine'">
+      <Button v-if="state.status !== 'pristine'"
         class="icon large"
         @click="incrementAll(-15)">
         --15
@@ -61,7 +60,7 @@
       <Icon class="pl-2" :name="timerState.currentPeriod % 2 === 1 ? 'sun' : 'moon'" />
       {{ formatTime(timerState.remainingTimeDisplay) }}
 
-      <Button v-if="status !== 'pristine'"
+      <Button v-if="state.status !== 'pristine'"
         class="icon large"
         @click="incrementAll(15)">
         15++
@@ -69,7 +68,7 @@
     </div>
     
     <div>
-      <Button v-if="status !== 'pristine'"
+      <Button v-if="state.status !== 'pristine'"
         class="icon large"
         @click="increment(-15)">
         -15
@@ -91,10 +90,10 @@
           complete: 'play',
           paused: 'play',
           pristine: 'play',
-        }[status]"/>
+        }[state.status]"/>
       </Button>
 
-      <Button v-if="status !== 'pristine'"
+      <Button v-if="state.status !== 'pristine'"
         class="icon large"
         @click="increment(15)">
         15+
@@ -104,7 +103,7 @@
 </template>
 
 <script>
-import {reactive, computed} from 'vue'
+import {reactive, computed, watchEffect} from 'vue'
 import {every} from '../helpers/date_helper'
 
 let timerState = reactive({
@@ -126,20 +125,44 @@ export default {
   components: {},
   setup(props, context) {
     let state = reactive({
-      
+      status: 'pristine',
+      backgroundColor: 'white'
     })
     let running = computed(() => {
       return timerState.startedAt !== null
     })
-    let status = computed(() => {
+    watchEffect(() => {
       if (timerState.startedAt === null && timerState.remainingTime === timerState.activePeriod) {
-        return 'pristine'
+        state.status = 'pristine'
       } else if (timerState.startedAt !== null) {
-        return 'running'
+        state.status = 'running'
       } else if (timerState.currentPeriod >= timerState.nSets*2) {
-        return 'complete'
+        state.status = 'complete'
       } else {
-        return 'paused'
+        state.status = 'paused'
+      }
+    })
+    watchEffect(() => {
+      if (state.status === 'running' && timerState.currentPeriod % 2 === 1) {
+        state.backgroundColor = 'lightgreen'
+      } else if (state.status === 'running' && timerState.currentPeriod % 2 === 0) {
+        state.backgroundColor = 'lightskyblue'
+      } else if (state.status === 'paused') {
+        state.backgroundColor = 'rgb(255, 255, 154)' // light yellow
+      } else {
+        state.backgroundColor = 'white'
+      }
+    })
+
+    let backgroundColor = computed(() => {
+      if (status === 'running' && timerState.currentPeriod % 2 === 1) {
+        return 'lightgreen'
+      } else if (status === 'running' && timerState.currentPeriod % 2 === 0) {
+        return 'lightskyblue'
+      } else if (status === 'paused') {
+        return 'rgb(255, 255, 154)' // light yellow
+      } else {
+        return 'white'
       }
     })
     let handle = null
@@ -241,12 +264,20 @@ export default {
       }
     }
 
-    return {state, timerState, running, status,
+    return {state, timerState, running, backgroundColor,
       playPause, reset, formatTime, increment, incrementAll, addSet}
   }
 }
 
 </script>
 
-<style>
+<style scoped>
+.background {
+  transition: background-color 0.3s;
+  
+}
+button.icon, 
+button.icon:hover {
+  background-color: rgba(150,150,150, 0.1);
+}
 </style>
