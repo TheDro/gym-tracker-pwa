@@ -15,15 +15,17 @@
       </Button>
     </div>
 
-    <div class="text-2xl">
+    <div class="py-1 text-2xl _active_rest_periods" v-if="status === 'pristine'">
       <div style="display: inline-block; width: 50%">
         <Button
           class="icon large"
           @click="incrementAll(-15, 'active')">
           --15
         </Button>
+
         <Icon name="sun" class="pl-2"/>
         {{ formatTime(timerState.activePeriod) }}
+
         <Button
           class="icon large"
           @click="incrementAll(15, 'active')">
@@ -36,8 +38,10 @@
           @click="incrementAll(-15, 'rest')">
           --15
         </Button>
+
         <Icon name="moon" class="pl-2"/>
         {{ formatTime(timerState.restPeriod) }}
+
         <Button
           class="icon large"
           @click="incrementAll(15, 'rest')">
@@ -47,56 +51,55 @@
      
     </div>
 
-    <div class="text-2xl">
-      <Icon :name="timerState.currentPeriod % 2 === 1 ? 'sun' : 'moon'" />
+    <div class="text-2xl py-1" v-if="status !== 'pristine'">
+      <Button v-if="status !== 'pristine'"
+        class="icon large"
+        @click="incrementAll(-15)">
+        --15
+      </Button>
+
+      <Icon class="pl-2" :name="timerState.currentPeriod % 2 === 1 ? 'sun' : 'moon'" />
       {{ formatTime(timerState.remainingTimeDisplay) }}
+
+      <Button v-if="status !== 'pristine'"
+        class="icon large"
+        @click="incrementAll(15)">
+        15++
+      </Button>
     </div>
-    <!-- <div>
-      {{ timerState.remainingTime }}
-      {{  Math.round((new Date() - timerState.startedAt)/1000) }}
-    </div> -->
     
-    <Button
-      class="icon large"
-      @click="incrementAll(-15)">
-      --15
-    </Button>
+    <div>
+      <Button v-if="status !== 'pristine'"
+        class="icon large"
+        @click="increment(-15)">
+        -15
+      </Button>
+      
+      <Button
+        class="icon large"
+        aria-label="reset" 
+        @click="reset()">
+        <Icon name="reset" />
+      </Button>
 
-    <Button
-      class="icon large"
-      @click="increment(-15)">
-      -15
-    </Button>
-    
-    <Button
-      class="icon large"
-      aria-label="reset" 
-      @click="reset()">
-      <Icon name="reset" />
-    </Button>
+      <Button
+        class="icon large"
+        aria-label="play/pause"
+        @click="playPause()">
+        <Icon :name="{
+          running: 'pause',
+          complete: 'play',
+          paused: 'play',
+          pristine: 'play',
+        }[status]"/>
+      </Button>
 
-    <Button
-      class="icon large"
-      aria-label="play/pause"
-      @click="playPause()">
-      <Icon :name="{
-        running: 'pause',
-        complete: 'play',
-        paused: 'play'
-      }[status]"/>
-    </Button>
-
-    <Button
-      class="icon large"
-      @click="increment(15)">
-      15+
-    </Button>
-
-    <Button
-      class="icon large"
-      @click="incrementAll(15)">
-      15++
-    </Button>
+      <Button v-if="status !== 'pristine'"
+        class="icon large"
+        @click="increment(15)">
+        15+
+      </Button>
+    </div>
   </div>
 </template>
 
@@ -130,7 +133,9 @@ export default {
       return timerState.startedAt !== null
     })
     let status = computed(() => {
-      if (timerState.startedAt !== null) {
+      if (timerState.startedAt === null && timerState.remainingTime === timerState.activePeriod) {
+        return 'pristine'
+      } else if (timerState.startedAt !== null) {
         return 'running'
       } else if (timerState.currentPeriod >= timerState.nSets*2) {
         return 'complete'
@@ -237,7 +242,8 @@ export default {
       }
     }
 
-    return {state, timerState, running, playPause, reset, status, formatTime, increment, incrementAll, addSet}
+    return {state, timerState, running, status,
+      playPause, reset, formatTime, increment, incrementAll, addSet}
   }
 }
 

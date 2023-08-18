@@ -1,6 +1,21 @@
 <template>
-  <h2 class="page-title" >{{state.message}}</h2>
-  <Timer></Timer>
+
+  <div>
+    <h2 style="width: 100%" class="page-title">{{state.message}}</h2>
+    <PopperPro>
+      <span style="position: absolute; top: 0rem; right: 0;">
+        <Button style="color: white; background-color: transparent" class="icon large"><Icon name="more-vertical"/></Button>
+      </span>
+      <PopupMenu>
+        <PopupItem @click="toggleTimer()">
+          <Icon name="check" v-show="globalState.showTimer"/> Timer
+        </PopupItem>
+      </PopupMenu>
+    </PopperPro>
+  </div>
+  <div class="border-b-2 border-gray-200" v-show="globalState.showTimer">
+    <Timer></Timer>
+  </div>
   <ul class="p-0">
 
     <li v-for="exercise in exercises" :key="exercise.uid"
@@ -43,6 +58,13 @@ import Modal from "./base/Modal";
 import {nextId} from "../helpers/id_helper";
 import WorkoutEditModal from "./WorkoutEditModal";
 import Timer from "./Timer"
+import PopperPro from "./popup/PopperPro";
+import PopupMenu from "./popup/PopupMenu";
+import PopupItem from "./popup/PopupItem";
+
+let globalState = reactive({
+  showTimer: false,
+})
 
 export default {
   components: {
@@ -50,6 +72,9 @@ export default {
     LastWorkouts,
     WorkoutEditModal,
     Timer,
+    PopperPro,
+    PopupMenu,
+    PopupItem,
   },
   setup() {
     let {store, addWorkout, removeWorkout} = useGym()
@@ -105,9 +130,12 @@ export default {
       editModalController.close()
     }
 
+    function toggleTimer() {
+      globalState.showTimer = !globalState.showTimer
+    }
 
-    return {state, store, exercises, onSelect, onSaveNew, onDestroyEdit,
-      newModalController, editModalController}
+    return {state, store, exercises, globalState, onSelect, onSaveNew, onDestroyEdit,
+      newModalController, editModalController, toggleTimer}
   }
 }
 
