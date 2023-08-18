@@ -15,4 +15,38 @@ function midDay(date) {
   return day
 }
 
-export {todayDate, midDay}
+// Run every dt milliseconds until callback returns true
+function every(dt, callback) {
+  let status = {
+    _running: false,
+    _handle: null,
+    stop() {
+      status._running = false
+      clearTimeout(status._handle)
+    },
+    restart() {
+      if (status._running === false) {
+        status._running = true
+        _every(status, dt, callback)
+      }
+    }
+  }
+
+  status.restart()
+  
+  return status;
+}
+
+function _every(status, dt, callback) {
+  status._handle = setTimeout(() => {
+    if (!status._running) {return}
+    let result = callback();
+    if (result === true) {
+      return
+    } else {
+      _every(status, dt, callback)
+    }
+  }, dt);
+}
+
+export {todayDate, midDay, every}

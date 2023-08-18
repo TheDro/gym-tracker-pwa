@@ -7,7 +7,6 @@
 <script>
 import {reactive, watchEffect} from 'vue'
 import feather from "feather-icons"
-window.feather = feather
 
 let iconMap = {
   addCircle: 'plus-circle',
@@ -18,6 +17,7 @@ let iconMap = {
   settings: 'settings',
   sync: 'refresh-cw',
   return: 'rotate-ccw',
+  reset: 'rotate-ccw',
 }
 
 let defaultSettings = {width: 16, height: 16}
