@@ -7,7 +7,6 @@
 <script>
 import {reactive, watchEffect} from 'vue'
 import feather from "feather-icons"
-window.feather = feather
 
 let iconMap = {
   addCircle: 'plus-circle',

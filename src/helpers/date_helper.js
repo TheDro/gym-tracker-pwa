@@ -48,6 +48,5 @@ function _every(status, dt, callback) {
     }
   }, dt);
 }
-window.every = every
 
 export {todayDate, midDay, every}

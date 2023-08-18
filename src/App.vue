@@ -1,6 +1,5 @@
 <template>
   <div v-if="state.message">{{state.message}}</div>
-  <!-- <VCal style="display: none"/> -->
   <router-view/>
   <div class="spacer"></div>
   <NavBar></NavBar>
@@ -10,11 +9,9 @@
 <script>
 import NavBar from "./components/NavBar.vue";
 import {reactive} from 'vue'
-import {Calendar as VCal} from 'v-calendar'
-import Timer from './components/Timer.vue'
 
 export default {
-  components: {NavBar, VCal, Timer},
+  components: {NavBar},
   setup() {
     let state = reactive({message: ''})
 

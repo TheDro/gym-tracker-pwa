@@ -104,9 +104,8 @@
 </template>
 
 <script>
-import {reactive, computed, watchEffect} from 'vue'
-import useGym from "../services/gym_service";
-import { every } from '../helpers/date_helper';
+import {reactive, computed} from 'vue'
+import {every} from '../helpers/date_helper'
 
 let timerState = reactive({
   nSets: 3,
