@@ -1,6 +1,7 @@
 <template>
   <div class="text-center py-1 background" :style="{'background-color': state.backgroundColor}">
-    <div class="">
+    
+    <div class="timer-row gap-2 flex items-center justify-center">
       <Button 
         class="icon large"
         @click="addSet(-1)">
@@ -14,15 +15,15 @@
       </Button>
     </div>
 
-    <div class="py-1 text-2xl _active_rest_periods" v-if="state.status === 'pristine'">
-      <div style="display: inline-block; width: 50%">
+    <div class="text-2xl" v-if="state.status === 'pristine'">
+      <div class="timer-row" stylee="display: inline-block; width: 50%">
         <Button
           class="icon large"
           @click="incrementAll(-15, 'active')">
           --15
         </Button>
 
-        <Icon name="sun" class="pl-2"/>
+        <Icon name="sun" style="transform: translateY(2px)" class="pl-2"/>
         {{ formatTime(timerState.activePeriod) }}
 
         <Button
@@ -31,14 +32,14 @@
           15++
         </Button>
       </div>
-      <div style="display: inline-block; width: 50%">
+      <div class="timer-row" stylee="display: inline-block; width: 50%">
         <Button
           class="icon large"
           @click="incrementAll(-15, 'rest')">
           --15
         </Button>
 
-        <Icon name="moon" class="pl-2"/>
+        <Icon name="moon" style="transform: translateY(2px)" class="pl-2"/>
         {{ formatTime(timerState.restPeriod) }}
 
         <Button
@@ -50,16 +51,22 @@
      
     </div>
 
-    <div class="text-2xl py-1" v-if="state.status !== 'pristine'">
+    <div class="timer-double-row text-7xl flex items-center justify-center" v-if="state.status !== 'pristine'">
       <Button v-if="state.status !== 'pristine'"
         class="icon large"
         @click="incrementAll(-15)">
         --15
       </Button>
 
-      <Icon class="pl-2" :name="timerState.currentPeriod % 2 === 1 ? 'sun' : 'moon'" />
-      {{ formatTime(timerState.remainingTimeDisplay) }}
-
+      <Icon 
+        style="line-height: 0"
+        class="pl-2" 
+        :size="32" 
+        :name="timerState.currentPeriod % 2 === 1 ? 'sun' : 'moon'" 
+      />
+      <span class="pr-2" style="transform: translateY(-0.25rem)">
+        {{ formatTime(timerState.remainingTimeDisplay) }}
+      </span>
       <Button v-if="state.status !== 'pristine'"
         class="icon large"
         @click="incrementAll(15)">
@@ -67,7 +74,7 @@
       </Button>
     </div>
     
-    <div>
+    <div class="timer-row">
       <Button v-if="state.status !== 'pristine'"
         class="icon large"
         @click="increment(-15)">
@@ -75,6 +82,7 @@
       </Button>
       
       <Button
+        :disabled="state.status === 'running'"
         class="icon large"
         aria-label="reset" 
         @click="reset()">
@@ -279,5 +287,14 @@ export default {
 button.icon, 
 button.icon:hover {
   background-color: rgba(150,150,150, 0.1);
+}
+
+.timer-row {
+  height: 2.75rem;
+  padding: 0.25rem;
+}
+.timer-double-row {
+  height: 5.5rem;
+  padding: 0.25rem;
 }
 </style>

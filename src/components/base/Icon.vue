@@ -1,5 +1,5 @@
 <template>
-  <span v-html="state.content">
+  <span class="inline-block" v-html="state.content">
 
   </span>
 </template>
@@ -20,14 +20,13 @@ let iconMap = {
   reset: 'rotate-ccw',
 }
 
-let defaultSettings = {width: 16, height: 16}
-
 
 export default {
   components: {
   },
   props: {
-    name: String
+    name: String,
+    size: Number,
   },
   setup(props) {
     let state = reactive({
@@ -35,10 +34,15 @@ export default {
     })
 
     watchEffect(() => {
+      let settings = {width: 16, height: 16}
+      if (props.size) {
+        settings.width = props.size
+        settings.height = props.size
+      }
       if (iconMap[props.name]) {
-        state.content = feather.icons[iconMap[props.name]].toSvg(defaultSettings)
+        state.content = feather.icons[iconMap[props.name]].toSvg(settings)
       } else {
-        state.content = feather.icons[props.name].toSvg(defaultSettings)
+        state.content = feather.icons[props.name].toSvg(settings)
       }
     })
 
