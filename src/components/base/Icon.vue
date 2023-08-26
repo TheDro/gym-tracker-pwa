@@ -18,6 +18,8 @@ let iconMap = {
   sync: 'refresh-cw',
   return: 'rotate-ccw',
   reset: 'rotate-ccw',
+  active: 'sun',
+  rest: 'moon',
 }
 
 

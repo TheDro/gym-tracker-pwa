@@ -23,7 +23,7 @@
           --15
         </Button>
 
-        <Icon name="sun" style="transform: translateY(2px)" class="pl-2"/>
+        <Icon name="active" style="transform: translateY(2px)" class="pl-2"/>
         {{ formatTime(timerState.activePeriod) }}
 
         <Button
@@ -32,14 +32,15 @@
           15++
         </Button>
       </div>
-      <div class="timer-row" stylee="display: inline-block; width: 50%">
+
+      <div class="timer-row">
         <Button
           class="icon large"
           @click="incrementAll(-15, 'rest')">
           --15
         </Button>
 
-        <Icon name="moon" style="transform: translateY(2px)" class="pl-2"/>
+        <Icon name="rest" style="transform: translateY(2px)" class="pl-2"/>
         {{ formatTime(timerState.restPeriod) }}
 
         <Button
@@ -62,7 +63,7 @@
         style="line-height: 0"
         class="pl-2" 
         :size="32" 
-        :name="timerState.currentPeriod % 2 === 1 ? 'sun' : 'moon'" 
+        :name="timerState.currentPeriodType" 
       />
       <span class="pr-2" style="transform: translateY(-0.25rem)">
         {{ formatTime(timerState.remainingTimeDisplay) }}
@@ -75,7 +76,7 @@
     </div>
     
     <div class="timer-row">
-      <Button v-if="state.status !== 'pristine'"
+      <Button v-if="state.status === 'running' || state.status === 'paused'"
         class="icon large"
         @click="increment(-15)">
         -15
@@ -93,15 +94,10 @@
         class="icon large"
         aria-label="play/pause"
         @click="playPause()">
-        <Icon :name="{
-          running: 'pause',
-          complete: 'play',
-          paused: 'play',
-          pristine: 'play',
-        }[state.status]"/>
+        <Icon :name="state.playButton"/>
       </Button>
 
-      <Button v-if="state.status !== 'pristine'"
+      <Button v-if="state.status === 'running' || state.status === 'paused'"
         class="icon large"
         @click="increment(15)">
         15+
@@ -119,12 +115,17 @@ let timerState = reactive({
   activePeriod: 60,
   restPeriod: 60,
   currentPeriod: 1,
+  currentPeriodType: 'active', // active or rest
   startedAt: null,
   remainingTime: null,
   remainingTimeDisplay: null,
 })
 timerState.remainingTime = timerState.activePeriod
 timerState.remainingTimeDisplay = timerState.remainingTime
+
+watchEffect(() => {
+  timerState.currentPeriodType = timerState.currentPeriod % 2 == 1 ? 'active' : 'rest'
+})
 
 export default {
   props: {
@@ -134,7 +135,8 @@ export default {
   setup(props, context) {
     let state = reactive({
       status: 'pristine',
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+      playButton: 'play',
     })
     let running = computed(() => {
       return timerState.startedAt !== null
@@ -151,9 +153,9 @@ export default {
       }
     })
     watchEffect(() => {
-      if (state.status === 'running' && timerState.currentPeriod % 2 === 1) {
+      if (state.status === 'running' && timerState.currentPeriodType === 'active') {
         state.backgroundColor = 'lightgreen'
-      } else if (state.status === 'running' && timerState.currentPeriod % 2 === 0) {
+      } else if (state.status === 'running' && timerState.currentPeriodType === 'rest') {
         state.backgroundColor = 'lightskyblue'
       } else if (state.status === 'paused') {
         state.backgroundColor = 'rgb(255, 255, 154)' // light yellow
@@ -161,18 +163,11 @@ export default {
         state.backgroundColor = 'white'
       }
     })
-
-    let backgroundColor = computed(() => {
-      if (status === 'running' && timerState.currentPeriod % 2 === 1) {
-        return 'lightgreen'
-      } else if (status === 'running' && timerState.currentPeriod % 2 === 0) {
-        return 'lightskyblue'
-      } else if (status === 'paused') {
-        return 'rgb(255, 255, 154)' // light yellow
-      } else {
-        return 'white'
-      }
+    watchEffect(() => {
+      state.playButton = state.status === 'running' ? 'pause' : 'play'
     })
+    
+
     let handle = null
 
     function updateLoop() {
@@ -184,13 +179,12 @@ export default {
           timerState.remainingTime*1000)
         if (timerState.currentPeriod >= timerState.nSets*2) {
           timerState.remainingTime = 0
+          timerState.startedAt = null
           updateDisplay()
-          // TODO: This doesn't seem right
-          playPause()
           return true
-        } else if (timerState.currentPeriod % 2 == 1) {
+        } else if (timerState.currentPeriodType === 'active') {
           timerState.remainingTime = timerState.activePeriod
-        } else if (timerState.currentPeriod % 2 == 0) {
+        } else if (timerState.currentPeriodType === 'rest') {
           timerState.remainingTime = timerState.restPeriod
         }
 
@@ -248,10 +242,9 @@ export default {
     }
 
     function incrementAll(amount, periodType = null) {
-      let currentPeriodType = timerState.currentPeriod % 2 == 1 ? 'active' : 'rest'
-      periodType = periodType || currentPeriodType
+      periodType = periodType || timerState.currentPeriodType
 
-      if (currentPeriodType === periodType) {
+      if (timerState.currentPeriodType === periodType) {
         increment(amount)
       }
       if (periodType === 'active') {
@@ -264,15 +257,14 @@ export default {
     function addSet(amount) {
       timerState.nSets = Math.max(1, timerState.nSets + amount)
       if (timerState.currentPeriod >= timerState.nSets*2) {
-          timerState.remainingTime = 0
-          updateDisplay()
-          // TODO: This doesn't seem right
-          playPause()
-          return true
+        timerState.remainingTime = 0
+        timerState.startedAt = null
+        updateDisplay()
+        handle.stop()
       }
     }
 
-    return {state, timerState, running, backgroundColor,
+    return {state, timerState, running,
       playPause, reset, formatTime, increment, incrementAll, addSet}
   }
 }
