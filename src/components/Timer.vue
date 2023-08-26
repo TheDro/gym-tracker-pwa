@@ -215,6 +215,7 @@ export default {
         (new Date() - timerState.startedAt)/1000
       if (actualRemainingTime < 0) {
         timerState.currentPeriod += 1
+        let currentPeriodType = timerState.currentPeriod % 2 == 1 ? 'active' : 'rest'
         timerState.startedAt = new Date(timerState.startedAt.valueOf() + 
           timerState.remainingTime*1000)
         if (timerState.currentPeriod >= timerState.nSets*2) {
@@ -222,9 +223,9 @@ export default {
           timerState.startedAt = null
           updateDisplay()
           return true
-        } else if (timerState.currentPeriodType === 'active') {
+        } else if (currentPeriodType === 'active') {
           timerState.remainingTime = timerState.activePeriod
-        } else if (timerState.currentPeriodType === 'rest') {
+        } else if (currentPeriodType === 'rest') {
           timerState.remainingTime = timerState.restPeriod
         }
 
