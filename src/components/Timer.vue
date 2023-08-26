@@ -110,18 +110,61 @@
 import {reactive, computed, watchEffect} from 'vue'
 import {every} from '../helpers/date_helper'
 
-let timerState = reactive({
-  nSets: 3,
-  activePeriod: 60,
-  restPeriod: 60,
-  currentPeriod: 1,
-  currentPeriodType: 'active', // active or rest
-  startedAt: null,
-  remainingTime: null,
-  remainingTimeDisplay: null,
+let timerState = reactive({})
+
+// let defaultTimerState = {
+//   nSets: 3,
+//   activePeriod: 60,
+//   restPeriod: 60,
+//   currentPeriod: 1,
+//   currentPeriodType: 'active', // active or rest
+//   startedAt: null,
+//   remainingTime: 60,
+//   remainingTimeDisplay: 60,
+// }
+
+
+let justLoaded = false
+load()
+
+watchEffect(() => {
+  save()
 })
-timerState.remainingTime = timerState.activePeriod
-timerState.remainingTimeDisplay = timerState.remainingTime
+
+function save() {
+  let storage = JSON.stringify({
+      nSets: timerState.nSets,
+      activePeriod: timerState.activePeriod,
+      restPeriod: timerState.restPeriod,
+    }, null, 2)
+
+  if (justLoaded) {
+    justLoaded = false
+    return
+  }
+  console.log('save timer!')
+  localStorage.setItem('timer', storage)
+}
+
+function load() {
+  console.log('load timer!')
+  justLoaded = true
+  let storage = localStorage.getItem('timer')
+  let timer = JSON.parse(storage) || {
+    nSets: 3,
+    activePeriod: 60,
+    restPeriod: 60,
+  }
+  Object.assign(timer, {
+    currentPeriod: 1,
+    currentPeriodType: 'active', // active or rest
+    startedAt: null,
+    remainingTime: timer.activePeriod,
+    remainginTimeDisplay: timer.activePeriod,
+  })
+  Object.assign(timerState, timer)
+}
+
 
 watchEffect(() => {
   timerState.currentPeriodType = timerState.currentPeriod % 2 == 1 ? 'active' : 'rest'
@@ -137,9 +180,6 @@ export default {
       status: 'pristine',
       backgroundColor: 'white',
       playButton: 'play',
-    })
-    let running = computed(() => {
-      return timerState.startedAt !== null
     })
     watchEffect(() => {
       if (timerState.startedAt === null && timerState.remainingTime === timerState.activePeriod) {
@@ -264,7 +304,7 @@ export default {
       }
     }
 
-    return {state, timerState, running,
+    return {state, timerState,
       playPause, reset, formatTime, increment, incrementAll, addSet}
   }
 }
