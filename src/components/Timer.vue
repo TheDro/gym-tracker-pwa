@@ -66,7 +66,7 @@
         :name="timerState.currentPeriodType" 
       />
       <span class="pr-2" style="transform: translateY(-0.25rem)">
-        {{ formatTime(timerState.remainingTimeDisplay) }}
+        {{ formatTime(timerState.remainingTime) }}
       </span>
       <Button v-if="state.status !== 'pristine'"
         class="icon large"
@@ -119,8 +119,8 @@ let timerState = reactive({})
 //   currentPeriod: 1,
 //   currentPeriodType: 'active', // active or rest
 //   startedAt: null,
+//   currentPeriodTime: 60,
 //   remainingTime: 60,
-//   remainingTimeDisplay: 60,
 // }
 
 
@@ -159,8 +159,8 @@ function load() {
     currentPeriod: 1,
     currentPeriodType: 'active', // active or rest
     startedAt: null,
+    currentPeriodTime: timer.activePeriod,
     remainingTime: timer.activePeriod,
-    remainginTimeDisplay: timer.activePeriod,
   })
   Object.assign(timerState, timer)
 }
@@ -182,7 +182,7 @@ export default {
       playButton: 'play',
     })
     watchEffect(() => {
-      if (timerState.startedAt === null && timerState.remainingTime === timerState.activePeriod) {
+      if (timerState.startedAt === null && timerState.currentPeriodTime === timerState.activePeriod) {
         state.status = 'pristine'
       } else if (timerState.startedAt !== null) {
         state.status = 'running'
@@ -211,26 +211,26 @@ export default {
     let handle = null
 
     function updateLoop() {
-      let actualRemainingTime = timerState.remainingTime - 
+      let remainingTime = timerState.currentPeriodTime - 
         (new Date() - timerState.startedAt)/1000
-      if (actualRemainingTime < 0) {
+      if (remainingTime < 0) {
         timerState.currentPeriod += 1
         let currentPeriodType = timerState.currentPeriod % 2 == 1 ? 'active' : 'rest'
         timerState.startedAt = new Date(timerState.startedAt.valueOf() + 
-          timerState.remainingTime*1000)
+          timerState.currentPeriodTime*1000)
         if (timerState.currentPeriod >= timerState.nSets*2) {
-          timerState.remainingTime = 0
+          timerState.currentPeriodTime = 0
           timerState.startedAt = null
-          updateDisplay()
+          updateRemainingTime()
           return true
         } else if (currentPeriodType === 'active') {
-          timerState.remainingTime = timerState.activePeriod
+          timerState.currentPeriodTime = timerState.activePeriod
         } else if (currentPeriodType === 'rest') {
-          timerState.remainingTime = timerState.restPeriod
+          timerState.currentPeriodTime = timerState.restPeriod
         }
 
       }
-      updateDisplay()
+      updateRemainingTime()
     }
 
     function playPause() {
@@ -238,11 +238,11 @@ export default {
         timerState.startedAt = new Date()
         if (timerState.currentPeriod >= timerState.nSets*2) {
           timerState.currentPeriod = 1
-          timerState.remainingTime = timerState.activePeriod
+          timerState.currentPeriodTime = timerState.activePeriod
         }
         handle = every(100, updateLoop)
       } else {
-        timerState.remainingTime -= (new Date() - timerState.startedAt)/1000
+        timerState.currentPeriodTime -= (new Date() - timerState.startedAt)/1000
         timerState.startedAt = null
         handle?.stop()
       }
@@ -250,8 +250,8 @@ export default {
 
     function reset() {
       timerState.currentPeriod = 1
-      timerState.remainingTime = timerState.activePeriod
-      updateDisplay()
+      timerState.currentPeriodTime = timerState.activePeriod
+      updateRemainingTime()
       if (timerState.startedAt) {timerState.startedAt = new Date()}
     }
 
@@ -262,24 +262,24 @@ export default {
       return `${minutes}:${('00'+seconds).slice(-2)}`
     }
 
-    function updateDisplay() {
+    function updateRemainingTime() {
       if (timerState.startedAt) {
-        timerState.remainingTimeDisplay = Math.max(0, timerState.remainingTime - (new Date() - timerState.startedAt)/1000)
+        timerState.remainingTime = Math.max(0, timerState.currentPeriodTime - (new Date() - timerState.startedAt)/1000)
       } else {
-        timerState.remainingTimeDisplay = Math.max(0, timerState.remainingTime)
+        timerState.remainingTime = Math.max(0, timerState.currentPeriodTime)
       }
     }
 
     function increment(amount) {
       if (timerState.startedAt) {
-        timerState.remainingTime = Math.max(
+        timerState.currentPeriodTime = Math.max(
           Math.round((new Date() - timerState.startedAt)/1000),
-          timerState.remainingTime + amount
+          timerState.currentPeriodTime + amount
         )
       } else {
-        timerState.remainingTime = Math.max(0, timerState.remainingTime + amount)
+        timerState.currentPeriodTime = Math.max(0, timerState.currentPeriodTime + amount)
       }
-      updateDisplay()
+      updateRemainingTime()
     }
 
     function incrementAll(amount, periodType = null) {
@@ -298,9 +298,9 @@ export default {
     function addSet(amount) {
       timerState.nSets = Math.max(1, timerState.nSets + amount)
       if (timerState.currentPeriod >= timerState.nSets*2) {
-        timerState.remainingTime = 0
+        timerState.currentPeriodTime = 0
         timerState.startedAt = null
-        updateDisplay()
+        updateRemainingTime()
         handle.stop()
       }
     }
