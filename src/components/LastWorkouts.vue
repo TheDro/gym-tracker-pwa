@@ -3,7 +3,7 @@
 
     <span
         v-for="(workout, index) in lastWorkouts" :key="workout.uid"
-        style="width: 15vw"
+        :style="{'background-color': getColor(workout), width: '15vw'}"
         class="inline-block workout text-center"
         :class="{'active': isToday(workout)}"
         @click="onClick(workout)">
@@ -18,6 +18,12 @@
 <script>
 import {reactive, computed} from 'vue'
 import useGym from "../services/gym_service";
+
+const DAY = 1000 * 60 * 60 * 24
+
+function interpolate(min, max, t) {
+  return min + (max - min) * t
+}
 
 export default {
   props: {
@@ -50,18 +56,25 @@ export default {
       return workout.date === store.currentDate
     }
 
-    return {state, store, lastWorkouts, onClick, isToday}
+    function getColor(workout) {
+      if (isToday(workout)) {
+        return 'hsl(99, 100%, 70%)'
+      }
+
+      let age = (new Date(store.currentDate) - new Date(workout.date)) / DAY
+      let t = Math.exp(-age/7)
+      let lightness = interpolate(100, 71, t)
+      let result = `hsl(191, 100%, ${lightness}%)`
+      return result
+    }
+
+
+    return {state, store, lastWorkouts, onClick, isToday, getColor}
   }
 }
 
 </script>
 
 <style>
-.workout:nth-child(2n-1) {
-  background-color: rgb(229, 231, 235);
-}
 
-.workout.active {
-  background-color: #78e6ff;
-}
 </style>

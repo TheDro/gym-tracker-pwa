@@ -128,7 +128,8 @@ export default {
 <style>
 button.icon.active-workout,
 button.icon.active-workout:focus {
-  background-color: #78e6ff;
+  /* background-color: #78e6ff; */
+  background-color: hsl(99, 100%, 70%);
 }
 
 </style>
