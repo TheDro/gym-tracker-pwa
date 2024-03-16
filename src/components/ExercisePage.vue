@@ -8,7 +8,7 @@
       <PopupMenu>
         <PopupItem @click="goToArchive()">Archive</PopupItem>
         <PopupItem @click="exportToFile()">Export</PopupItem>
-        <PopupItem @click="importFile()">Import</PopupItem>
+        <PopupItem @click="importFile()">Import...</PopupItem>
       </PopupMenu>
     </PopperPro>
   </div>
