@@ -84,11 +84,11 @@ define(['./workbox-03b5ff7e'], (function (workbox) { 'use strict';
     "url": "assets/index.31266840.css",
     "revision": "f76031c08612693e257a329c4a2167fe"
   }, {
-    "url": "assets/index.43bbe14c.js",
-    "revision": "5d0b0e7aff0f09404294e3b46be8a2af"
+    "url": "assets/index.a2156e60.js",
+    "revision": "c142fba6ae45d1eb5126f3f95ef5f796"
   }, {
     "url": "index.html",
-    "revision": "1e57a0ba28719fef1dbfa9df0db0c7ad"
+    "revision": "f80625030c622402e25c2b2020024967"
   }, {
     "url": "./GymTrackerLogoV2_512.png",
     "revision": "ebc8e3ba0ba04f213f24711edd00b55e"
