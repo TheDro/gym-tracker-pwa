@@ -81,14 +81,14 @@ define(['./workbox-03b5ff7e'], (function (workbox) { 'use strict';
    * See https://goo.gl/S9QRab
    */
   workbox.precacheAndRoute([{
-    "url": "assets/index.31266840.css",
-    "revision": "f76031c08612693e257a329c4a2167fe"
+    "url": "assets/index.fcbae31f.js",
+    "revision": "b3ce1df00e581aaf459032aa98d72420"
   }, {
-    "url": "assets/index.a2156e60.js",
-    "revision": "c142fba6ae45d1eb5126f3f95ef5f796"
+    "url": "assets/index.fd784466.css",
+    "revision": "b66c0f6166685c1cb58e7c3d0ea1c3b0"
   }, {
     "url": "index.html",
-    "revision": "f80625030c622402e25c2b2020024967"
+    "revision": "cbbee5976cf6e506a100773b3eba5969"
   }, {
     "url": "./GymTrackerLogoV2_512.png",
     "revision": "ebc8e3ba0ba04f213f24711edd00b55e"
