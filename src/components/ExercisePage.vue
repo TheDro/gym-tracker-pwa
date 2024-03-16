@@ -7,6 +7,8 @@
       </span>
       <PopupMenu>
         <PopupItem @click="goToArchive()">Archive</PopupItem>
+        <PopupItem @click="exportToFile()">Export</PopupItem>
+        <PopupItem @click="importFile()">Import</PopupItem>
       </PopupMenu>
     </PopperPro>
   </div>
@@ -90,7 +92,7 @@ export default {
   components: {PopupItem, PopupMenu, PopperPro, IndexDraggable, ExerciseEditModal, Modal, ClickToEdit, LastWorkouts},
   setup() {
     let router = useRouter()
-    let {store, addExercise, togglePlaceholder} = useGym()
+    let {store, addExercise, togglePlaceholder, exportExercises, importExercises} = useGym()
     let state = reactive({
       message: 'Exercises',
       newExercise: {name: ''}
@@ -118,8 +120,17 @@ export default {
       router.push('archive')
     }
 
+    function exportToFile() {
+      exportExercises()
+    }
+
+    function importFile() {
+      importExercises()
+    }
+
     return {state, store, goToArchive, onAddExercise, modalController,
-      saveNewExercise, addToCurrentWorkout, hasCurrentPlaceholder}
+      saveNewExercise, addToCurrentWorkout, hasCurrentPlaceholder,
+      exportToFile, importFile}
   }
 }
 

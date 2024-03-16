@@ -4,6 +4,8 @@ import IndexArray from "index-array";
 import {nextId} from "../helpers/id_helper";
 import {prependSorted, decorateArrays, replaceUids} from "../helpers/array_helper";
 import {addRefocusListener, MINUTE} from "./window_service";
+import {saveAsFile, loadJsonFile} from '../helpers/file_helper';
+import {useToast} from 'vue-toastification';
 
 let store = reactive({
   exercises: new IndexArray(),
@@ -106,8 +108,48 @@ function togglePlaceholder(exercise, date) {
   }
 }
 
+function exportExercises() {
+  saveAsFile(store.exercises, 'exercises.json')
+}
+
+function importExercises() {
+  loadJsonFile().then((exercises) => {
+    _loadExerciseData(exercises)
+  }).catch((err) => {
+    console.log(err)
+    let toast = useToast()
+    toast.error('Failed to load exercises')
+  })
+}
+
+function _loadExerciseData(exercises) {
+  console.log('load from file!')
+  justLoaded = true
+  let newExercises = decorateArrays(replaceUids(exercises))
+  newExercises.forEach((exercise) => {
+    exercise.name = exercise.name || nextId()
+    exercise.minWeight = exercise.minWeight || 0
+    exercise.maxWeight = exercise.maxWeight || 500
+    exercise.deltaWeight = exercise.deltaWeight || 2.5
+    exercise.placeholders = new IndexArray()
+    exercise.workouts.forEach((workout) => {
+      workout.date = workout.date || store.currentDate
+      workout.nSets = workout.nSets || 1
+      workout.nReps = workout.nReps || 1
+      workout.weight = workout.weight || 2.5
+      exercise.placeholders.push({uid: nextId(), date: workout.date})
+    })
+    if (store.exercises.fetch({name: exercise.name})) {
+      store.exercises.remove({name: exercise.name})
+    }
+    store.exercises.push(exercise)
+  })
+}
+
+
 function useGym() {
-  return {store, addExercise, removeExercise, addWorkout, removeWorkout, addPlaceholder, togglePlaceholder}
+  return {store, addExercise, removeExercise, addWorkout, removeWorkout, 
+    addPlaceholder, togglePlaceholder, exportExercises, importExercises}
 }
 
 export default useGym
